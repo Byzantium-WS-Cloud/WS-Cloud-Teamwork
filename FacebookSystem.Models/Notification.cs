@@ -8,7 +8,7 @@
     {
         public int Id { get; set; }
 
-        public NotificationType Notification { get; set; }
+        public NotificationType NotificationType { get; set; }
 
         public DateTime CreatedOn { get; set; }
 

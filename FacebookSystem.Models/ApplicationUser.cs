@@ -1,8 +1,13 @@
 ﻿namespace FacebookSystem.Models
 {
+    using System.Threading.Tasks;
+    using System.Security.Claims;
     using System.Collections.Generic;
 
-    public class ApplicationUser //: IdentityUser
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+
+    public class ApplicationUser : IdentityUser
     {
         private ICollection<Post> posts;
         private ICollection<Group> groups;
@@ -11,6 +16,7 @@
         private ICollection<Notification> notifications;
 
         public ApplicationUser()
+            :base()
         {
             this.posts = new HashSet<Post>();
             this.groups = new HashSet<Group>();
@@ -47,6 +53,13 @@
         {
             get { return this.notifications; }
             set { this.notifications = value; }
+        }
+
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
+        {
+            var userIdentity = await manager.CreateIdentityAsync(this, authenticationType);
+
+            return userIdentity;
         }
     }
 }

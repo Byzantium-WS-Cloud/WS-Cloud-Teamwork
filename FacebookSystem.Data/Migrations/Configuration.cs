@@ -5,14 +5,14 @@ namespace FacebookSystem.Data.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<FacebookSystem.Data.FacebookDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<FacebookDbContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            this.AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(FacebookSystem.Data.FacebookDbContext context)
+        protected override void Seed(FacebookDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

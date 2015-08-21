@@ -11,7 +11,7 @@
     public class FacebookDbContext : IdentityDbContext<ApplicationUser>, IFacebookDbContext
     {
         public FacebookDbContext()
-            :base("FacebookDbConnection")
+            : base("FacebookDbConnection")
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<FacebookDbContext, Configuration>());
         }
@@ -23,6 +23,11 @@
         public virtual IDbSet<Comment> Comments { get; set; }
         
         public virtual IDbSet<Notification> Notifications { get; set; }
+
+        public static FacebookDbContext Create()
+        {
+            return new FacebookDbContext();
+        }
 
         public new void SaveChanges()
         {
@@ -42,6 +47,6 @@
                 .HasMany(u => u.Friends)
                 .WithOptional()
                 .WillCascadeOnDelete(false);
-        }
+        }       
     }
 }

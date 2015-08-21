@@ -13,6 +13,8 @@ using FacebookSystem.Services.Models;
 
 namespace FacebookSystem.Services.Providers
 {
+    using FacebookSystem.Models;
+
     public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
     {
         private readonly string _publicClientId;

@@ -16,7 +16,6 @@
         private ICollection<Notification> notifications;
 
         public ApplicationUser()
-            :base()
         {
             this.posts = new HashSet<Post>();
             this.groups = new HashSet<Group>();
@@ -58,7 +57,6 @@
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {
             var userIdentity = await manager.CreateIdentityAsync(this, authenticationType);
-
             return userIdentity;
         }
     }

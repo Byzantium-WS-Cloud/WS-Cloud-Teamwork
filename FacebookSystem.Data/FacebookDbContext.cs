@@ -21,6 +21,8 @@
         public virtual IDbSet<Group> Groups { get; set; }
         
         public virtual IDbSet<Comment> Comments { get; set; }
+
+        public virtual IDbSet<PostLike> PostLikes { get; set; } 
         
         public virtual IDbSet<Notification> Notifications { get; set; }
 

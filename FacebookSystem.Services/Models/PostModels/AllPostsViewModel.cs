@@ -26,10 +26,7 @@
                         CreatedOn = a.CreatedOn,
                         Owner =
                             new OwnerViewModel() { Id = a.Owner.Id, Username = a.Owner.UserName },
-                        Likes = a.Likes.Select(l => new LikeViewModel()
-                                                    {
-                                                        Likes = l.Post.Likes.Count()
-                                                    }),
+                        Likes = a.Likes.Count(),
                         Comments =
                             a.Comments.Select(
                                 c => new CommentViewModel() { Id = c.Id, Content = c.Content })
@@ -45,7 +42,7 @@
 
         public OwnerViewModel Owner { get; set; }
 
-        public IEnumerable<LikeViewModel> Likes { get; set; }
+        public int Likes { get; set; }
 
         public virtual IEnumerable<CommentViewModel> Comments { get; set; }
     }

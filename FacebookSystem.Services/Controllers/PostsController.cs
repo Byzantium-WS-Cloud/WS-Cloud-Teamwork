@@ -43,7 +43,7 @@
                             post.CreatedOn,
                             Owner = post.Owner.UserName,
                             Comments = post.Comments.Select(c => c.Content),
-                            Likes = post.Likes.Select(l => l.Post.Likes.Count())
+                            Likes = post.Likes.Count()
                         });
         }
 
@@ -98,7 +98,66 @@
             return this.Ok("Post has been successfully deleted!");
         }
 
+        // POST api/{id}/like
+        [HttpPost]
+        [Route("{id}/like")]
+        public IHttpActionResult LikePost(int id)
+        {
+            var post = this.Data.Posts.All().FirstOrDefault(p => p.Id == id);
+            if (post == null)
+            {
+                return this.NotFound();
+            }
 
-        // TODO Like post, Dislike post
+            var currentUserId = this.User.Identity.GetUserId();
+
+            var postAlreadyLiked = this.Data.PostLikes.All().Any(l => l.PostId == post.Id && l.UserId == currentUserId);
+            if (postAlreadyLiked)
+            {
+                return this.BadRequest("You have already liked this post.");
+            }
+
+            var postLike = new PostLike() 
+            {
+                Post = post,
+                UserId = currentUserId
+            };
+
+
+
+            post.Likes.Add(postLike);
+            this.Data.SaveChanges();
+            
+            return this.Ok("Successfully  liked post " + post.Id);
+        }
+
+        // PUT api/{id}/dislike
+        [HttpPut]
+        [Route("{id}/dislike")]
+        public IHttpActionResult DislikePost(int id)
+        {
+            var post = this.Data.Posts.All().FirstOrDefault(p => p.Id == id);
+            if (post == null)
+            {
+                return this.NotFound();
+            }
+
+            var currentUserId = this.User.Identity.GetUserId();
+
+            var postAlreadyLiked = this.Data.PostLikes.All().Any(l => l.PostId == post.Id && l.UserId == currentUserId);
+            if (!postAlreadyLiked)
+            {
+                return this.BadRequest("Cannot dislike not liked post.");
+            }
+
+            var postLike = this.Data.PostLikes.All().FirstOrDefault(l => l.PostId == post.Id);
+            
+            post.Likes.Remove(postLike);
+            postLike.PostId = null;
+            postLike.UserId = null;
+            this.Data.SaveChanges();
+
+            return this.Ok("Successfully  disliked post " + post.Id);
+        }
     }
 }

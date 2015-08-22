@@ -47,6 +47,11 @@
                 .HasMany(u => u.Friends)
                 .WithOptional()
                 .WillCascadeOnDelete(false);
-        }       
+
+            modelBuilder.Entity<Post>()
+                .HasRequired(p => p.Owner)
+                .WithMany(u => u.Posts)
+                .WillCascadeOnDelete(false);
+        }
     }
 }

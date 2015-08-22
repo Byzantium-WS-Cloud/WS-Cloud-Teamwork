@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     public class Post
     {
@@ -16,11 +17,18 @@
 
         public int Id { get; set; }
 
+        [Required]
+        [MinLength(2)]
         public string Content { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
-        public ApplicationUser Owner { get; set; }
+        [Required]
+        public string OwnerId { get; set; }
+
+        public virtual ApplicationUser Owner { get; set; }
+
+        public bool IsPostHidden { get; set; }
 
         public virtual ICollection<PostLike> Likes 
         {

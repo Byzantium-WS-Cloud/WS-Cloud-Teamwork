@@ -1,27 +1,24 @@
-﻿namespace FacebookSystem.Services.Controllers
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http;
+using System.Web.Http.ModelBinding;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.OAuth;
+using FacebookSystem.Services.Models;
+using FacebookSystem.Services.Providers;
+using FacebookSystem.Services.Results;
+
+namespace FacebookSystem.Services.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using System.Security.Claims;
-    using System.Security.Cryptography;
-    using System.Threading.Tasks;
-    using System.Web;
-    using System.Web.Http;
-    using System.Web.Http.ModelBinding;
-
-    using FacebookSystem.Models;
-
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.EntityFramework;
-    using Microsoft.AspNet.Identity.Owin;
-    using Microsoft.Owin.Security;
-    using Microsoft.Owin.Security.Cookies;
-    using Microsoft.Owin.Security.OAuth;
-    using FacebookSystem.Services.Models;
-    using FacebookSystem.Services.Providers;
-    using FacebookSystem.Services.Results;
-
     [Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
@@ -331,9 +328,9 @@
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Username, Email = model.Email };
+            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
-            IdentityResult result = await this.UserManager.CreateAsync(user, model.Password);
+            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
             {

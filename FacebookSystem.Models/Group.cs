@@ -20,7 +20,7 @@
 
         public DateTime CreatedOn { get; set; }
 
-        public virtual ICollection<Post> Posts 
+        public ICollection<Post> Posts 
         {
             get { return this.posts; }
             set { this.posts = value; }

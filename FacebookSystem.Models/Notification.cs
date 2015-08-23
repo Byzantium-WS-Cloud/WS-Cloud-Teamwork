@@ -14,8 +14,12 @@
 
         public bool Seen { get; set; }
 
-        public ApplicationUser ByUser { get; set; }
+        public string ByUserId { get; set; }
+
+        public string OwnerId { get; set; }
+
+        public virtual ApplicationUser ByUser { get; set; }
  
-        public ApplicationUser Owner { get; set; }
+        public virtual ApplicationUser Owner { get; set; }
     }
 }

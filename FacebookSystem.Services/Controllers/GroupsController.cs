@@ -5,13 +5,17 @@
 
     public class GroupsController : BaseApiController
     {
+        public GroupsController()
+            :base()
+        {
+        }
 
         [HttpGet]
         public IHttpActionResult All()
         {
-            var existingGroup = this.Data.Groups.All();
+            var existingGroup = this.data.Groups.All();
 
-            return this.Ok(existingGroup);
+            return Ok(existingGroup);
         }
     }
 }

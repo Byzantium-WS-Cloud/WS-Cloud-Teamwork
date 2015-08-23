@@ -6,29 +6,16 @@
 
     public class BaseApiController : ApiController
     {
-        private IFacebookSystemData data;
+        protected IFacebookSystemData data;
 
         public BaseApiController()
-            : this(new FacebookSystemData())
+            :this(new FacebookSystemData())
         {
         }
 
         public BaseApiController(IFacebookSystemData data)
         {
-            this.Data = data;
-        }
-
-        protected IFacebookSystemData Data
-        {
-            get
-            {
-                return this.data;
-            }
-
-            private set
-            {
-                this.data = value;
-            }
+            this.data = data;
         }
     }
 }

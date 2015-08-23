@@ -22,11 +22,6 @@
             this.repositories = new Dictionary<Type, object>();
         }
 
-        public IGenericRepository<PostLike> PostLikes
-        {
-            get { return GetRepository<PostLike>(); }
-        }
-
         public IGenericRepository<Post> Posts
         {
             get { return GetRepository<Post>(); }

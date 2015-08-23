@@ -12,8 +12,6 @@
         IDbSet<Group> Groups { get; set; }
         
         IDbSet<Comment> Comments { get; set; }
-
-        IDbSet<PostLike> PostLikes { get; set; }
         
         IDbSet<Notification> Notifications { get; set; }
 

@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
+    using System.ComponentModel.DataAnnotations;
 
     public class Post
     {
@@ -17,26 +17,26 @@
 
         public int Id { get; set; }
 
+        [Required]
+        [MinLength(2)]
         public string Content { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
+        [Required]
         public string OwnerId { get; set; }
-
-        public int? GroupId { get; set; }
 
         public virtual ApplicationUser Owner { get; set; }
 
-        [ForeignKey("GroupId")]
-        public virtual Group Group { get; set; }
+        public bool IsPostHidden { get; set; }
 
-        public virtual ICollection<PostLike> Likes
+        public virtual ICollection<PostLike> Likes 
         {
             get { return this.likes; }
             set { this.likes = value; }
         }
 
-        public virtual ICollection<Comment> Comments
+        public virtual ICollection<Comment> Comments 
         {
             get { return this.comments; }
             set { this.comments = value; }

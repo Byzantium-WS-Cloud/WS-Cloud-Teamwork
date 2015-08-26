@@ -11,6 +11,8 @@
 
         IGenericRepository<Group> Groups { get; }
 
+        IGenericRepository<PostLike> PostLikes { get; }
+
         IGenericRepository<Notification> Notifications { get; }
 
         void SaveChanges();

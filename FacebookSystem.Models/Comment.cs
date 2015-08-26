@@ -2,8 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Comment
     {
@@ -20,19 +18,11 @@
 
         public DateTime CreatedOn { get; set; }
 
-        public int PostId { get; set; }
+        public ApplicationUser PostOwner { get; set; }
 
-        public string PostOwnerId { get; set; }
+        public ApplicationUser CommentOwner { get; set; }
 
-        public string CommentOwnerId { get; set; }
-
-        public virtual Post Post { get; set; }
-
-        public virtual ApplicationUser PostOwner { get; set; }
-
-        public virtual ApplicationUser CommentOwner { get; set; }
-
-        public virtual ICollection<CommentLike> Likes 
+        public ICollection<CommentLike> Likes 
         {
             get { return this.likes; }
             set { this.likes = value; }

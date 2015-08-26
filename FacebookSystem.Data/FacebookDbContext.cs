@@ -11,7 +11,7 @@
     public class FacebookDbContext : IdentityDbContext<ApplicationUser>, IFacebookDbContext
     {
         public FacebookDbContext()
-            :base("FacebookDbConnection")
+            : base("FacebookDbConnection")
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<FacebookDbContext, Configuration>());
         }
@@ -21,8 +21,15 @@
         public virtual IDbSet<Group> Groups { get; set; }
         
         public virtual IDbSet<Comment> Comments { get; set; }
+
+        public virtual IDbSet<PostLike> PostLikes { get; set; } 
         
         public virtual IDbSet<Notification> Notifications { get; set; }
+
+        public static FacebookDbContext Create()
+        {
+            return new FacebookDbContext();
+        }
 
         public new void SaveChanges()
         {
@@ -39,23 +46,13 @@
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<ApplicationUser>()
-                .HasMany<ApplicationUser>(u => u.Friends)
-                .WithMany()
-                .Map(uu =>
-                {
-                    uu.MapLeftKey("UserId");
-                    uu.MapRightKey("FriendId");
-                    uu.ToTable("UserFriends");
-                });
-            
-            modelBuilder.Entity<Comment>()
-                .HasRequired(c => c.CommentOwner)
-                .WithMany(c => c.Comments)
-                .HasForeignKey(c => c.CommentOwnerId);
-
-            modelBuilder.Entity<ApplicationUser>()
-                .HasMany(n => n.Notifications)
+                .HasMany(u => u.Friends)
                 .WithOptional()
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Post>()
+                .HasRequired(p => p.Owner)
+                .WithMany(u => u.Posts)
                 .WillCascadeOnDelete(false);
         }
     }

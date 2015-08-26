@@ -5,28 +5,19 @@ namespace FacebookSystem.Data.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<FacebookSystem.Data.FacebookDbContext>
+    using FacebookSystem.Models;
+
+    internal sealed class Configuration : DbMigrationsConfiguration<FacebookDbContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = true;
+            this.AutomaticMigrationsEnabled = true;
+            this.AutomaticMigrationDataLossAllowed = true;
         }
 
-        protected override void Seed(FacebookSystem.Data.FacebookDbContext context)
+        protected override void Seed(FacebookDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            
         }
     }
 }

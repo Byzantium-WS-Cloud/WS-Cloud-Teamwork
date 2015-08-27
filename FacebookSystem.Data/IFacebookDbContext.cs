@@ -17,6 +17,8 @@
         
         IDbSet<Notification> Notifications { get; set; }
 
+        IDbSet<FriendRequest> FriendRequests { get; set; }
+
         void SaveChanges();
 
         IDbSet<T> Set<T>() where T : class;

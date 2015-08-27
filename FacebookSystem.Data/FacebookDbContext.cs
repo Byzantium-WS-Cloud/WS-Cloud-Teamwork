@@ -22,9 +22,11 @@
         
         public virtual IDbSet<Comment> Comments { get; set; }
 
-        public virtual IDbSet<PostLike> PostLikes { get; set; } 
+        public virtual IDbSet<PostLike> PostLikes { get; set; }
         
         public virtual IDbSet<Notification> Notifications { get; set; }
+
+        public virtual IDbSet<FriendRequest> FriendRequests { get; set; }
 
         public static FacebookDbContext Create()
         {
@@ -53,6 +55,16 @@
             modelBuilder.Entity<Post>()
                 .HasRequired(p => p.Owner)
                 .WithMany(u => u.Posts)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<FriendRequest>()
+                .HasRequired<ApplicationUser>(r => r.From)
+                .WithMany()
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<FriendRequest>()
+                .HasRequired<ApplicationUser>(r => r.To)
+                .WithMany(u => u.FriendRequests)
                 .WillCascadeOnDelete(false);
         }
     }

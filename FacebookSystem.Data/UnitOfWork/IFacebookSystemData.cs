@@ -15,6 +15,8 @@
 
         IGenericRepository<Notification> Notifications { get; }
 
+        IGenericRepository<ApplicationUser> ApplicationUsers { get; }
+
         void SaveChanges();
     }
 }

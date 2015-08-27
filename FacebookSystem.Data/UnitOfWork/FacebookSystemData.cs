@@ -47,6 +47,11 @@
             get { return GetRepository<Notification>(); }
         }
 
+        public IGenericRepository<ApplicationUser> ApplicationUsers
+        {
+            get { return GetRepository<ApplicationUser>(); }
+        }
+
         public void SaveChanges()
         {
             this.context.SaveChanges();

@@ -59,7 +59,10 @@
     <Compile Include="ApplicationUser.cs" />
     <Compile Include="Comment.cs" />
     <Compile Include="CommentLike.cs" />
+    <Compile Include="Enums\Gender.cs" />
+    <Compile Include="Enums\FriendRequestStatus.cs" />
     <Compile Include="Enums\NotificationType.cs" />
+    <Compile Include="FriendRequest.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="Post.cs" />

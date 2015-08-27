@@ -3,9 +3,11 @@
     using System.Threading.Tasks;
     using System.Security.Claims;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using Enums;
 
     public class ApplicationUser : IdentityUser
     {
@@ -14,6 +16,7 @@
         private ICollection<Comment> comments;
         private ICollection<ApplicationUser> friends;
         private ICollection<Notification> notifications;
+        private ICollection<FriendRequest> friendRequests;
 
         public ApplicationUser()
         {
@@ -22,7 +25,18 @@
             this.comments = new HashSet<Comment>();
             this.friends = new HashSet<ApplicationUser>();
             this.notifications = new HashSet<Notification>();
+            this.friendRequests = new HashSet<FriendRequest>();
         }
+        
+        public string Name { get; set; }
+
+        public string ProfileImageData { get; set; }
+
+        public string ProfileImageDataMinified { get; set; }
+
+        public string CoverImageData { get; set; }
+
+        public Gender Gender { get; set; }
 
         public virtual ICollection<Post> Posts
         {
@@ -52,6 +66,12 @@
         {
             get { return this.notifications; }
             set { this.notifications = value; }
+        }
+
+        public virtual ICollection<FriendRequest> FriendRequests
+        {
+            get { return this.friendRequests; }
+            set { this.friendRequests = value; }
         }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)

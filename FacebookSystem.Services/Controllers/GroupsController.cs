@@ -118,14 +118,20 @@ namespace FacebookSystem.Services.Controllers
                 return this.BadRequest(this.ModelState);
             }
 
-            var ownerId = this.User.Identity.GetUserId();
-            var owner = this.Data.ApplicationUsers.All().FirstOrDefault(u => u.Id == ownerId);
+            var postOwnerId = this.User.Identity.GetUserId();
+            var postOwner = this.Data.ApplicationUsers.All().FirstOrDefault(u => u.Id == postOwnerId);
+
+            if (!group.Members.Any(m => m.Id == postOwnerId))
+            {
+                return this.BadRequest("You are not member of the group");
+            }
+
             var postObj = new Post()
             {
                 Content = post.Content,
                 CreatedOn = DateTime.Now,
-                Owner = owner,
-                OwnerId = ownerId
+                Owner = postOwner,
+                OwnerId = postOwnerId
             };
             group.Posts.Add(postObj);
             this.Data.SaveChanges();
@@ -141,6 +147,29 @@ namespace FacebookSystem.Services.Controllers
             };
 
             return this.Ok(viewModel);
+        }
+
+        [HttpPost]
+        public IHttpActionResult Join(int groupId)
+        {
+            var group = this.Data.Groups.All().SingleOrDefault(g => g.Id == groupId);
+            if (group == null)
+            {
+                return this.BadRequest("Invalid group id");
+            }
+
+            var currentUserId = this.User.Identity.GetUserId();
+
+            if (group.Members.Any(m => m.Id == currentUserId))
+            {
+                return this.BadRequest("You are already member of this group");
+            }   
+
+            var currentUser = this.Data.ApplicationUsers.All().FirstOrDefault(u => u.Id == currentUserId);
+            group.Members.Add(currentUser);
+            this.Data.SaveChanges();
+
+            return this.Ok(string.Format("You successfuly join the {0} group", group.Name));
         }
 
         [HttpGet]

@@ -52,6 +52,11 @@
             get { return GetRepository<ApplicationUser>(); }
         }
 
+        public IGenericRepository<FriendRequest> FriendRequests
+        {
+            get { return GetRepository<FriendRequest>(); }
+        }
+
         public void SaveChanges()
         {
             this.context.SaveChanges();

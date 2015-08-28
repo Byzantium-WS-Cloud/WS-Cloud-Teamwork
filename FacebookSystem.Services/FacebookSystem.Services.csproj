@@ -202,6 +202,7 @@
     <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PostsController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -217,7 +218,11 @@
     <Compile Include="Models\LikeModels\LikeViewModel.cs" />
     <Compile Include="Models\PostModels\AllPostsViewModel.cs" />
     <Compile Include="Models\PostModels\CreatePostBindingModel.cs" />
+    <Compile Include="Models\UserModels\FriendRequestViewModel.cs" />
+    <Compile Include="Models\UserModels\NewsFeedBindingModel.cs" />
+    <Compile Include="Models\UserModels\MinifiedUserViewModel.cs" />
     <Compile Include="Models\UserModels\UserViewModel.cs" />
+    <Compile Include="Models\UserModels\SearchUserViewModel.cs" />
     <Compile Include="Models\UserModels\OwnerViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />

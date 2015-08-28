@@ -17,6 +17,8 @@
 
         IGenericRepository<ApplicationUser> ApplicationUsers { get; }
 
+        IGenericRepository<FriendRequest> FriendRequests { get; }
+
         void SaveChanges();
     }
 }

@@ -15,7 +15,7 @@
     public class UsersController : BaseApiController
     {
         // GET api/users/{username}
-        [HttpGet]
+        /*[HttpGet]
         [Route("{username}")]
         public IHttpActionResult GetUser(string username)
         {
@@ -35,6 +35,6 @@
             var result = UserViewModel.Create(user, loggedUser);
 
             return this.Ok(result);
-        }
+        }*/
     }
 }

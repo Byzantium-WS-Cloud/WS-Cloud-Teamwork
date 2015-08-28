@@ -1,10 +1,147 @@
-﻿namespace FacebookSystem.Services.Controllers
-{
-    using System.Linq;
-    using System.Web.Http;
+﻿using FacebookSystem.Services.Models;
+using FacebookSystem.Services.Models.GroupModels;
 
+namespace FacebookSystem.Services.Controllers
+{
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using FacebookSystem.Models;
+    using System.Web.Http;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Models.PostModels;
+    using Microsoft.AspNet.Identity;
+    using WebGrease.Css.Extensions;
+
+    [Authorize]
     public class GroupsController : BaseApiController
     {
+        [HttpPost]
+        public IHttpActionResult CreateGroup(CreateGroupBindingModel group)
+        {
+            if (group == null)
+            {
+                return this.BadRequest("Group model cannot be null");
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest(this.ModelState);
+            }
+
+            if (this.Data.Groups.All().Any(g => g.Name == group.Name))
+            {
+                return this.BadRequest("The group name already exists");
+            }
+
+            var currentUserId = this.User.Identity.GetUserId();
+            var currentUser = this.Data.ApplicationUsers.All().FirstOrDefault(u => u.Id == currentUserId);
+            this.Data.Groups.Add(new Group()
+            {
+                Name = group.Name,
+                CreatedOn = DateTime.Now,
+                Members = new List<ApplicationUser>()
+                {
+                    currentUser
+                }
+            });
+            this.Data.SaveChanges();
+
+            var viewModel = new CreateGroupViewModel()
+            {
+                Name = group.Name
+            };
+
+            return this.Ok(viewModel);
+        }
+
+        [HttpGet]
+        public IHttpActionResult FindGroupById(int id)
+        {
+            var group = this.Data.Groups.All().SingleOrDefault(g => g.Id == id);
+
+            if (group == null)
+            {
+                return this.BadRequest("Invalid group id");
+            }
+
+            var postViewModel = new List<PostViewModel>();
+            group.Posts.ToList().ForEach(p =>
+            {
+                postViewModel.Add(new PostViewModel()
+                {
+                    Content = p.Content,
+                    Owner = new GroupUserViewModel()
+                    {
+                        UserName = p.Owner.UserName,
+                        Id = p.OwnerId
+                    }
+                });
+            });
+
+            var userViewModel = new List<GroupUserViewModel>();
+            group.Members.ForEach(m =>
+            {
+                userViewModel.Add(new GroupUserViewModel()
+                {
+                    UserName = m.UserName,
+                    Id = m.Id
+                });
+            });
+
+            var groupModel = new GroupViewModel()
+            {
+                Name = group.Name,
+                CreateOn = group.CreatedOn,
+                Posts = postViewModel,
+                Members = userViewModel
+            };
+
+            return this.Ok(groupModel);
+        }
+
+        public IHttpActionResult AddPost(int groupId, CreatePostBindingModel post)
+        {
+            var group = this.Data.Groups.All().SingleOrDefault(g => g.Id == groupId);
+            if (group == null)
+            {
+                return this.BadRequest("Invalid group id");
+            }
+
+            if (post == null)
+            {
+                return this.BadRequest("Post model cannot be null");
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest(this.ModelState);
+            }
+
+            var ownerId = this.User.Identity.GetUserId();
+            var owner = this.Data.ApplicationUsers.All().FirstOrDefault(u => u.Id == ownerId);
+            var postObj = new Post()
+            {
+                Content = post.Content,
+                CreatedOn = DateTime.Now,
+                Owner = owner,
+                OwnerId = ownerId
+            };
+            group.Posts.Add(postObj);
+            this.Data.SaveChanges();
+
+            var viewModel = new PostViewModel()
+            {
+                Owner = new GroupUserViewModel()
+                {
+                    Id = postObj.OwnerId,
+                    UserName = postObj.Owner.UserName
+                },
+                Content = postObj.Content
+            };
+
+            return this.Ok(viewModel);
+        }
 
         [HttpGet]
         public IHttpActionResult All()

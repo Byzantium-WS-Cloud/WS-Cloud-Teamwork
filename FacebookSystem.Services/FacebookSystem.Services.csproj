@@ -209,6 +209,11 @@
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommentModels\CommentViewModel.cs" />
+    <Compile Include="Models\GroupModels\CreateGroupBindingModel.cs" />
+    <Compile Include="Models\GroupModels\CreateGroupViewModel.cs" />
+    <Compile Include="Models\GroupModels\GroupUserViewModel.cs" />
+    <Compile Include="Models\GroupModels\GroupViewModel.cs" />
+    <Compile Include="Models\GroupModels\PostViewModel.cs" />
     <Compile Include="Models\LikeModels\LikeViewModel.cs" />
     <Compile Include="Models\PostModels\AllPostsViewModel.cs" />
     <Compile Include="Models\PostModels\CreatePostBindingModel.cs" />

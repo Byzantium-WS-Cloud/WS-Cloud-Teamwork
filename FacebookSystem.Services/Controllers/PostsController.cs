@@ -119,11 +119,9 @@
 
             var postLike = new PostLike() 
             {
-                Post = post,
+                PostId = id,
                 UserId = currentUserId
             };
-
-
 
             post.Likes.Add(postLike);
             this.Data.SaveChanges();
@@ -132,7 +130,7 @@
         }
 
         // PUT api/{id}/dislike
-        [HttpPut]
+        [HttpDelete]
         [Route("{id}/dislike")]
         public IHttpActionResult DislikePost(int id)
         {

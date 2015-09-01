@@ -71,6 +71,7 @@ namespace FacebookSystem.Services.Controllers
                 postViewModel.Add(new PostViewModel()
                 {
                     Id = p.Id,
+                    IsPostHidden = p.IsPostHidden,
                     Likes = p.Likes.Count,
                     Content = p.Content,
                     Owner = new GroupUserViewModel()
@@ -235,12 +236,41 @@ namespace FacebookSystem.Services.Controllers
             return this.Ok("You successfully like this post");
         }
 
-        public IHttpActionResult DeletePost()
+        [HttpDelete]
+        public IHttpActionResult DeletePost(int postId, int groupId)
         {
-            throw new NotImplementedException();
+            var group = this.Data.Groups.All().SingleOrDefault(g => g.Id == groupId);
+
+            if (group == null)
+            {
+                return this.BadRequest("Invalid group id");
+            }
+
+            var post = group.Posts.SingleOrDefault(p => p.Id == postId);
+
+            if (post == null)
+            {
+                return this.BadRequest("Invalid post id");
+            }
+
+            var currentUserId = this.User.Identity.GetUserId();
+            //var currentUser = this.Data.ApplicationUsers.All().FirstOrDefault(u => u.Id == currentUserId);
+
+            if (post.Owner.Id != currentUserId)
+            {
+                return this.BadRequest("You are not the owner of this post");
+            }
+
+            if (post.IsPostHidden)
+            {
+                return this.BadRequest("The post is already deleted");
+            }
+
+            post.IsPostHidden = true;
+            this.Data.SaveChanges();
+
+            return this.Ok("The post has been deleted");
         }
-
-
 
         [HttpGet]
         public IHttpActionResult All()

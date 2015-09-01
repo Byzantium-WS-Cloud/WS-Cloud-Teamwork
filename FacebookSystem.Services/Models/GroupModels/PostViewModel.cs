@@ -9,5 +9,7 @@
         public string Content { get; set; }
 
         public int Likes { get; set; }
+
+        public bool IsPostHidden { get; set; }
     }
 }

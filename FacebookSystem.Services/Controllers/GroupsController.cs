@@ -70,6 +70,8 @@ namespace FacebookSystem.Services.Controllers
             {
                 postViewModel.Add(new PostViewModel()
                 {
+                    Id = p.Id,
+                    Likes = p.Likes.Count,
                     Content = p.Content,
                     Owner = new GroupUserViewModel()
                     {
@@ -133,6 +135,7 @@ namespace FacebookSystem.Services.Controllers
                 Owner = postOwner,
                 OwnerId = postOwnerId
             };
+
             group.Posts.Add(postObj);
             this.Data.SaveChanges();
 
@@ -171,6 +174,73 @@ namespace FacebookSystem.Services.Controllers
 
             return this.Ok(string.Format("You successfuly join the {0} group", group.Name));
         }
+        
+        [HttpPut]
+        public IHttpActionResult Leave(int groupId)
+        {
+            var group = this.Data.Groups.All().FirstOrDefault(g => g.Id == groupId);
+            var currentUserId = this.User.Identity.GetUserId();
+
+            if (group == null)
+            {
+                return this.BadRequest("Invalid group id");
+            }
+
+            var member = group.Members.SingleOrDefault(m => m.Id == currentUserId);
+            if (member == null)
+            {
+                return this.BadRequest("You are not member of this group");
+            }
+
+            group.Members.Remove(member);
+            this.Data.SaveChanges();
+
+            return this.Ok(string.Format("You successfuly leave {0} group", group.Name));
+        }
+
+        // You can like post even if you are not member
+        public IHttpActionResult LikePost(int postId, int groupId)
+        {
+            var group = this.Data.Groups.All().SingleOrDefault(g => g.Id == groupId);
+
+            if (group == null)
+            {
+                return this.BadRequest("Invalid group id");
+            }
+
+            var post = group.Posts.SingleOrDefault(p => p.Id == postId);
+
+            if (post == null)
+            {
+                return this.BadRequest("Invalid post id");
+            }
+
+            var currentUserId = this.User.Identity.GetUserId();
+            var currentUser = this.Data.ApplicationUsers.All().FirstOrDefault(u => u.Id == currentUserId);
+
+            if (post.Likes.Any(l => l.UserId == currentUserId))
+            {
+                return this.BadRequest("You have already liked this post");
+            }
+
+            post.Likes.Add(new PostLike()
+            {
+                Post = post,
+                PostId = post.Id,
+                User = currentUser,
+                UserId = currentUser.Id
+            });
+            this.Data.SaveChanges();
+
+            return this.Ok("You successfully like this post");
+        }
+
+        public IHttpActionResult DeletePost()
+        {
+            throw new NotImplementedException();
+        }
+
+
 
         [HttpGet]
         public IHttpActionResult All()

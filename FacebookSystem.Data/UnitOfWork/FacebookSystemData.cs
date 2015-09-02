@@ -37,6 +37,11 @@
             get { return GetRepository<Comment>(); }
         }
 
+        public IGenericRepository<CommentLike> CommentLikes
+        {
+            get {  return GetRepository<CommentLike>(); }
+        } 
+
         public IGenericRepository<Group> Groups
         {
             get { return GetRepository<Group>(); }

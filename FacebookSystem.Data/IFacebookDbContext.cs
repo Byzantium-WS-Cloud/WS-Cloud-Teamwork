@@ -13,6 +13,8 @@
         
         IDbSet<Comment> Comments { get; set; }
 
+        IDbSet<CommentLike> CommentLikes { get; set; }
+        
         IDbSet<PostLike> PostLikes { get; set; }
         
         IDbSet<Notification> Notifications { get; set; }

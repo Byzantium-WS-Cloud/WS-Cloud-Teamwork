@@ -9,6 +9,8 @@
 
         IGenericRepository<Comment> Comments { get; }
 
+        IGenericRepository<CommentLike> CommentLikes { get;  }
+
         IGenericRepository<Group> Groups { get; }
 
         IGenericRepository<PostLike> PostLikes { get; }

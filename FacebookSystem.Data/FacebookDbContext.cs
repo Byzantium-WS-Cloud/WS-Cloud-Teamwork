@@ -22,6 +22,8 @@
         
         public virtual IDbSet<Comment> Comments { get; set; }
 
+        public virtual IDbSet<CommentLike> CommentLikes { get; set; } 
+
         public virtual IDbSet<PostLike> PostLikes { get; set; }
         
         public virtual IDbSet<Notification> Notifications { get; set; }
@@ -66,6 +68,17 @@
                 .HasRequired<ApplicationUser>(r => r.To)
                 .WithMany(u => u.FriendRequests)
                 .WillCascadeOnDelete(false);
+
+            //modelBuilder.Entity<Comment>()
+            //    .HasRequired<ApplicationUser>(c => c.CommentOwner)
+            //    .WithMany(u => u.Comments)
+            //    .WillCascadeOnDelete(false);
+
+            //modelBuilder.Entity<Comment>()
+            //    .HasRequired(c => c.PostOwner)
+            //    .WithOptional()
+            //    .WillCascadeOnDelete(false);
+
         }
     }
 }

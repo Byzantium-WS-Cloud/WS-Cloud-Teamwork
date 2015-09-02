@@ -7,9 +7,7 @@
 
     using FacebookSystem.Models;
     using FacebookSystem.Services.Models.CommentModels;
-    using FacebookSystem.Services.Models.LikeModels;
 
-    using Microsoft.Ajax.Utilities;
 
     public class AllPostsViewModel
     {
@@ -28,8 +26,19 @@
                             new OwnerViewModel() { Id = a.Owner.Id, Username = a.Owner.UserName },
                         Likes = a.Likes.Count(),
                         Comments =
-                            a.Comments.Select(
-                                c => new CommentViewModel() { Id = c.Id, Content = c.Content })
+                            a.Comments.Select(c => new MinifiedCommentViewModel()
+                       {
+                           Id = c.Id,
+                           Content = c.Content,
+                           CreatedOn = c.CreatedOn,
+                           CommentOwner =
+                               new OwnerViewModel()
+                                   {
+                                       Id = c.CommentOwner.Id,
+                                       Username = c.CommentOwner.UserName
+                                   },
+                           LikesCount = c.Likes.Count
+                       })
                     };
             }
         }
@@ -44,6 +53,6 @@
 
         public int Likes { get; set; }
 
-        public virtual IEnumerable<CommentViewModel> Comments { get; set; }
+        public virtual IEnumerable<MinifiedCommentViewModel> Comments { get; set; }
     }
 }

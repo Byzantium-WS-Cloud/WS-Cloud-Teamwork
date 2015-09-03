@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     public class Comment
     {
@@ -14,15 +15,23 @@
 
         public int Id { get; set; }
 
+        [Required]
+        [MinLength(2)]
+
         public string Content { get; set; }
+
+        public int PostId { get; set; }
+
 
         public DateTime CreatedOn { get; set; }
 
-        public ApplicationUser PostOwner { get; set; }
+        public virtual ApplicationUser PostOwner { get; set; }
 
-        public ApplicationUser CommentOwner { get; set; }
+        public virtual ApplicationUser CommentOwner { get; set; }
 
-        public ICollection<CommentLike> Likes 
+        public bool IsCommentHidden { get; set; }
+
+        public virtual ICollection<CommentLike> Likes 
         {
             get { return this.likes; }
             set { this.likes = value; }

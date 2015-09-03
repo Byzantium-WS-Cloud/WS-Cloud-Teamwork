@@ -1,0 +1,14 @@
+D:\SoftUni\WebServices And Cloud\TeamWork_Facebook\trunk\FacebookSystem.Models\bin\Debug\FacebookSystem.Models.dll.config
+D:\SoftUni\WebServices And Cloud\TeamWork_Facebook\trunk\FacebookSystem.Models\bin\Debug\FacebookSystem.Models.dll
+D:\SoftUni\WebServices And Cloud\TeamWork_Facebook\trunk\FacebookSystem.Models\bin\Debug\FacebookSystem.Models.pdb
+D:\SoftUni\WebServices And Cloud\TeamWork_Facebook\trunk\FacebookSystem.Models\bin\Debug\EntityFramework.dll
+D:\SoftUni\WebServices And Cloud\TeamWork_Facebook\trunk\FacebookSystem.Models\bin\Debug\EntityFramework.SqlServer.dll
+D:\SoftUni\WebServices And Cloud\TeamWork_Facebook\trunk\FacebookSystem.Models\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+D:\SoftUni\WebServices And Cloud\TeamWork_Facebook\trunk\FacebookSystem.Models\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\SoftUni\WebServices And Cloud\TeamWork_Facebook\trunk\FacebookSystem.Models\bin\Debug\EntityFramework.xml
+D:\SoftUni\WebServices And Cloud\TeamWork_Facebook\trunk\FacebookSystem.Models\bin\Debug\EntityFramework.SqlServer.xml
+D:\SoftUni\WebServices And Cloud\TeamWork_Facebook\trunk\FacebookSystem.Models\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+D:\SoftUni\WebServices And Cloud\TeamWork_Facebook\trunk\FacebookSystem.Models\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\SoftUni\WebServices And Cloud\TeamWork_Facebook\trunk\FacebookSystem.Models\obj\Debug\FacebookSystem.Models.csprojResolveAssemblyReference.cache
+D:\SoftUni\WebServices And Cloud\TeamWork_Facebook\trunk\FacebookSystem.Models\obj\Debug\FacebookSystem.Models.dll
+D:\SoftUni\WebServices And Cloud\TeamWork_Facebook\trunk\FacebookSystem.Models\obj\Debug\FacebookSystem.Models.pdb

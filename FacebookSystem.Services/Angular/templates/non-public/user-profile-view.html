@@ -1,0 +1,81 @@
+<div ng-include="'templates/non-public/navbar-view.html'"></div>
+<div ng-init="pageHeader='Edit Profile'" ng-include="'templates/non-public/page-header-view.html'"></div>
+<div class="row">
+    <div class="col-lg-11 user-profile">
+        <div class="row">
+            <div class="col-md-3">
+                <div>
+                    <h3 class="profile-image-header">Profile image</h3>
+                    <img class="profile-image img-thumbnail" actual-src="{{ currentUserprofilepic }}" ng-src="./img/testP.jpg" alt="image" />
+                    <div>
+                        <p class="text-primary"><strong>Allowed format: .jpg</strong></p>
+                        <p class="text-primary"><strong>Limit: 128kb.</strong></p>
+                        <span class="btn btn-default btn-file btn-primary">
+                            Upload <i class="fa fa-folder-open-o"></i><input type="file" ng-model="profileData.profileImageData" accept="image/*" app-filereader />
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <form class="form-horizontal" name="profileForm">
+                    <fieldset>
+                        <legend class="user-legend">Edit profile</legend>
+                        <div class="form-group">
+                            <label for="inputEditName" class="col-lg-2 control-label">Name</label>
+                            <div class="col-lg-5">
+                                <span class="label label-danger error" ng-show="profileForm.profileUsername.$error.required">Required!</span>
+                                <span class="label label-danger error" ng-show="profileForm.profileUsername.$error.minlength">Min length is 4</span>
+                                <input type="text" name="profileUsername" required ng-minlength="4" class="form-control" ng-model="profileData.name" id="inputEditName" placeholder="Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEditMail" class="col-lg-2 control-label">Email</label>
+                            <div class="col-lg-5">
+                                <span class="label label-danger error" ng-show="profileForm.profileEmail.$error.required">Required!</span>
+                                <span class="label label-danger error" ng-show="profileForm.profileEmail.$error.minlength">Min length is 6</span>
+                                <input type="email" name="profileEmail" required ng-minlength="6" class="form-control" ng-model="profileData.email" id="inputEditMail" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Gender</label>
+                            <div class="col-lg-5">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" ng-model="profileData.gender" name="optionsRadios" value="1" id="optionsRadios1" >
+                                        Male
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" ng-model="profileData.gender" name="optionsRadios" value="2" id="optionsRadios2" >
+                                        Female
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-5">
+                                <div>
+                                    <h3 class="profile-image-header">Timeline image</h3>
+                                    <img actual-src="{{ profileData.coverImageData }}" ng-src="./img/timelineDefault.jpg" alt="image" class="profile-timeline"/>
+                                    <div>
+                                        <p class="text-info"><strong>Limit 1024kb.</strong></p>
+                                     <span class="btn btn-default btn-file btn-primary">
+                                         Upload <i class="fa fa-folder-open-o"></i><input type="file" ng-model="profileData.coverImageData" accept="image/*" app-filereader />
+                                     </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-10 col-lg-offset-2">
+                                <button ng-disabled="profileForm.$invalid" ng-click="editUserProfile(profileData)" type="submit" class="btn btn-success btn-primary btn-lg">Edit profile <i class="fa fa-pencil-square-o"></i></button>
+                                <a href="#/users/feeds" type="submit" class="btn btn-danger btn-primary btn-lg">Cancel</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

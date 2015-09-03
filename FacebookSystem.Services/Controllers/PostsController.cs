@@ -13,7 +13,6 @@
     [RoutePrefix("api/posts")]
     public class PostsController : BaseApiController
     {
-	// Comment for Georgi
         // GET api/posts/GetAllPosts
         [AllowAnonymous]
         [HttpGet]

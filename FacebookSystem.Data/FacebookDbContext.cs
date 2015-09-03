@@ -80,5 +80,7 @@
             //    .WillCascadeOnDelete(false);
 
         }
+
+        public System.Data.Entity.DbSet<FacebookSystem.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-md-6 col-lg-offset-3">
+        <form class="form-horizontal" name="loginForm">
+            <fieldset>
+                <legend class="user-legend">Login</legend>
+                <div class="form-group">
+                    <label for="inputLoginUsername" class="col-lg-2 control-label">Username</label>
+                    <div class="col-lg-8">
+                        <span class="label label-danger error" ng-show="loginForm.loginUsername.$error.required">Required!</span>
+                        <span class="label label-danger error" ng-show="loginForm.loginUsername.$error.minlength">Min length is 4 symbols!</span>
+                        <input type="text" name="loginUsername" required ng-minlength="4" ng-model="user.username" class="form-control" id="inputLoginUsername" placeholder="Username">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputLoginPassword" class="col-lg-2 control-label">Password</label>
+                    <div class="col-lg-8">
+                        <span class="label label-danger error" ng-show="loginForm.loginUsername.$error.required">Required!</span>
+                        <span class="label label-danger error" ng-show="loginForm.loginPassword.$error.minlength">Min length is 6 symbols!</span>
+                        <input type="password" name="loginPassword" required ng-minlength="6" ng-model="user.password" class="form-control" id="inputLoginPassword" placeholder="Password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <button ng-disabled="loginForm.$invalid" ng-click="loginUser(user)" type="submit" class="btn btn-primary">Login <i class="fa fa-sign-in"></i></button>
+                        <button ng-click="go('/')" type="reset" class="btn btn-default">Cancel</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>

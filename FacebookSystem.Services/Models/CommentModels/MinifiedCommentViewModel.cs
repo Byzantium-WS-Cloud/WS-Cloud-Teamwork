@@ -2,11 +2,9 @@
 {
     using System;
     using System.Linq.Expressions;
-    using System.Runtime.Serialization;
 
     using FacebookSystem.Models;
 
-    using Microsoft.Ajax.Utilities;
 
     public class MinifiedCommentViewModel
     {

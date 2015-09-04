@@ -55,7 +55,7 @@
         //Post api/posts/{id}/comments
         [HttpPost]
         [Route("api/posts/{postId}/comments")]
-        public IHttpActionResult AddComment(int postId, CreateCommentBindingModel model)
+        public IHttpActionResult AddComment(int postId, CommentBindingModel model)
         {
             var post = this.Data.Posts.All().FirstOrDefault(p => p.Id == postId);
 
@@ -99,9 +99,42 @@
         }
 
         //Put /comments/{id}
-        public IHttpActionResult EditComment(int postId, int commentId)
+        [HttpPut]
+        [Route ("api/comments/{commentId}")]
+        public IHttpActionResult EditComment(int commentId, CommentBindingModel model)
         {
-            throw new NotImplementedException();
+            
+            if (model == null)
+            {
+                return this.BadRequest("Model cannot be null");
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest(this.ModelState);
+            }
+            
+            var comment = this.Data.Comments.All().FirstOrDefault(c => c.Id == commentId);
+
+            if (comment == null)
+            {
+                return this.NotFound();
+            }
+
+            var currentUserId = this.User.Identity.GetUserId();
+
+            // or currentUserId != comment.PostWallOwnerId
+            if (currentUserId != comment.CommentOwner.Id)
+            {
+                return this.Unauthorized();
+            }
+
+            comment.Content = model.Content;
+            this.Data.SaveChanges();
+
+            var viewModel = this.Data.Comments.All().Where(c => c.Id == commentId).Select(CommentViewModel.Create);
+            return this.Ok(viewModel);
+
         }
 
         //Get /comments/{id}/likes

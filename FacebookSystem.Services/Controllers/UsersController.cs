@@ -1,6 +1,12 @@
 ﻿namespace FacebookSystem.Services.Controllers
 {
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Net.Http;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Web;
     using System.Web.Http;
     using Microsoft.AspNet.Identity;
     using Models;
@@ -113,6 +119,81 @@
                 .Select(MinifiedUserViewModel.Create);
 
             return this.Ok(friends);
+        }
+
+        // GET api/users/pesho/wall
+        [HttpGet]
+        [Route("{username}/wall")]
+        public IHttpActionResult GetWall(string username, [FromUri]GetWallBindingModel wall)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest(this.ModelState);
+            }
+
+            var wallOwner = this.Data.ApplicationUsers.All()
+                .FirstOrDefault(u => u.UserName == username);
+            if (wallOwner == null)
+            {
+                return this.NotFound();
+            }
+
+            var loggedUserId = this.User.Identity.GetUserId();
+            if (loggedUserId == null)
+            {
+                return this.BadRequest("Invalid session token.");
+            }
+
+            var loggedUser = this.Data.ApplicationUsers.All().FirstOrDefault(u => u.Id == loggedUserId);
+
+            var candidatePosts = wallOwner.Posts
+                .OrderByDescending(p => p.CreatedOn)
+                .AsQueryable();
+            var t = wallOwner.Posts.OrderByDescending(p => p.CreatedOn).ToList();
+
+            if (wall.StartPostId.HasValue)
+            {
+                candidatePosts = candidatePosts
+                    .SkipWhile(p => p.Id != wall.StartPostId)
+                    .Skip(1)
+                    .AsQueryable();
+            }
+
+            var pagePosts = candidatePosts
+                .Take(wall.PageSize)
+                .Select(p => WallPostsViewModel.Create(p, loggedUser));
+
+            return this.Ok(pagePosts);
+        }
+
+        // POST api/User/Login
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("Login")]
+        public async Task<HttpResponseMessage> LoginUser(LoginUserBindingModel model)
+        {
+            // Invoke the "token" OWIN service to perform the login: /api/token
+            // Ugly hack: I use a server-side HTTP POST because I cannot directly invoke the service (it is deeply hidden in the OAuthAuthorizationServerHandler class)
+            var request = HttpContext.Current.Request;
+            var tokenServiceUrl = request.Url.GetLeftPart(UriPartial.Authority) + request.ApplicationPath + "api/Account/Login";
+            using (var client = new HttpClient())
+            {
+                var requestParams = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("grant_type", "password"),
+                new KeyValuePair<string, string>("username", model.Username),
+                new KeyValuePair<string, string>("password", model.Password)
+            };
+                var requestParamsFormUrlEncoded = new FormUrlEncodedContent(requestParams);
+                var tokenServiceResponse = await client.PostAsync(tokenServiceUrl, requestParamsFormUrlEncoded);
+                var responseString = await tokenServiceResponse.Content.ReadAsStringAsync();
+                var responseCode = tokenServiceResponse.StatusCode;
+                var responseMsg = new HttpResponseMessage(responseCode)
+                {
+                    Content = new StringContent(responseString, Encoding.UTF8, "application/json")
+                };
+                return responseMsg;
+            }
         }
     }
 }

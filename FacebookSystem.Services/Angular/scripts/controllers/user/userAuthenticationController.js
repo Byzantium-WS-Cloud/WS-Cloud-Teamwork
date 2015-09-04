@@ -13,7 +13,7 @@ socialNetwork.controller('userAuthenticationController', function ($scope, $loca
         authorizationService.login(loginData)
             .then(function (data) {
                 authorizationService.setUserCredentials(data);
-                $location.path('/users/feeds');
+                $location.path('/users/dominik/wall');      // users/feeds
                 notifyService.showInfo('Login successfully');
             }, function (error) {
                 notifyService.showError('Login failed ', error);
@@ -32,15 +32,15 @@ socialNetwork.controller('userAuthenticationController', function ($scope, $loca
 
     $scope.logoutUser = function () {
         authorizationService.logout()
-            .then(function (data) {
+            .then(function(data) {
                 authorizationService.clearUserCredentials();
                 authorizationService.clearUserTemporaryData();
                 sessionStorage.clear();
                 $location.path('/');
                 window.location.reload();
                 notifyService.showInfo('Successfully logged out!');
-            }, function (err) {
+            }, function(err) {
                 notifyService.showError('Logout failed ', error);
-            })
+            });
     };
 });

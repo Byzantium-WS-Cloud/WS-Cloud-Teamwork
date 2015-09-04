@@ -52,9 +52,9 @@ socialNetwork.factory('authorizationService', function (BASE_URL, PAGE_SIZE, mai
     serviceRequester.getUserWallFeed = function (username, pageSize) {
         var url;
         if (pageSize) {
-            url = serviceUrl + '/' + username + '/wall?StartPostId=&PageSize='+pageSize;
+            url = serviceUrl + '/' + username + '/wall?StartPostId=&PageSize=' + pageSize;
         }else {
-            url = serviceUrl + '/' + username + '/wall?StartPostId=&PageSize='+PAGE_SIZE;
+            url = serviceUrl + '/' + username + '/wall?StartPostId=&PageSize=' + PAGE_SIZE;
         }
 
         return mainRequesterService.getRequest(url, {});

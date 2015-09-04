@@ -31,7 +31,7 @@ socialNetwork.config(function ($routeProvider) {
     });
 
     $routeProvider.when('/users/profile', {
-        templateUrl: './templates/non-public/user-profile-view.html',
+        templateUrl: 'Angular/templates/non-public/user-profile-view.html',
         controller: 'userController',
         title: 'Edit Profile'
     });

@@ -259,13 +259,13 @@ socialNetwork.controller('userController', function ($scope, $location, $http, $
 
     $scope.previewUser = function (feed) {
         authorizationService.getUserPreviewDataByUsername(feed.author.username)
-            .then(function (userData) {
+            .then(function(userData) {
                 $scope.hoveredUserPreviewData = userData;
                 $scope.isUserHovered = true;
                 $scope.hoveredPostId = feed.id;
-            }, function (error) {
+            }, function(error) {
                 notifyService.showError('Connection error. Please reload the page and check your internet connection');
-            })
+            });
     };
 
     $scope.stopUserPreview = function () {
@@ -335,16 +335,16 @@ socialNetwork.controller('userController', function ($scope, $location, $http, $
             $scope.getFriendsFriendsPreview($routeParams.username);
         }
 
-        $scope.getNewsFeed();
-        $scope.userDetails();
-        $scope.fillEditProfileData();
+        //$scope.getNewsFeed();
+        //$scope.userDetails();
+        //$scope.fillEditProfileData();
         $scope.getUserWall($routeParams.username);
         $scope.getWallsPost($routeParams.username);
-        $interval(function () {
-            if (sessionStorage['access_token']) {
-                $scope.getUserPendingFriendRequests();
-            }
-        }, 5000);
+        //$interval(function () {
+        //    if (sessionStorage['access_token']) {
+        //        $scope.getUserPendingFriendRequests();
+        //    }
+        //}, 5000);
 
         // Add page auto-refresh
     }

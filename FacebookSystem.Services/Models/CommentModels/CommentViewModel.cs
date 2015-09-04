@@ -1,6 +1,7 @@
 ﻿namespace FacebookSystem.Services.Models.CommentModels
 {
     using System;
+    using System.Linq;
     using System.Linq.Expressions;
 
     using FacebookSystem.Models;
@@ -14,9 +15,15 @@
 
         public DateTime CreatedOn { get; set; }
 
+        public UserViewModelMinified Author { get; set; }
+
         public OwnerViewModel PostOwner { get; set; }
 
         public OwnerViewModel CommentOwner { get; set; }
+
+        public int LikesCount { get; set; }
+
+        public bool IsLiked { get; set; }
 
         public LikeViewModel Likes { get; set; }
 
@@ -69,6 +76,20 @@
                                    },
                            Likes = new LikeViewModel() { Likes = c.Likes.Count }
                        };
+        }
+
+        public static CommentViewModel CreateCommentAndUser(Comment c, ApplicationUser currentUser)
+        {
+            return new CommentViewModel()
+            {
+                Id = c.Id,
+                Author = UserViewModelMinified.Create(c.CommentOwner),
+                LikesCount = c.Likes.Count,
+                Content = c.Content,
+                CreatedOn = c.CreatedOn,
+                IsLiked = c.Likes
+                    .Any(l => l.UserId == currentUser.Id)
+            };
         }
     }
 }

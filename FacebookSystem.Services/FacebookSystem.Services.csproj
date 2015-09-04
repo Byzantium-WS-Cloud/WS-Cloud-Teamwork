@@ -41,6 +41,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin.Hosting">
+      <HintPath>..\packages\Microsoft.Owin.Hosting.3.0.1\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Testing">
+      <HintPath>..\packages\Microsoft.Owin.Testing.3.0.1\lib\net45\Microsoft.Owin.Testing.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -222,11 +228,16 @@
     <Compile Include="Models\PostModels\AllPostsViewModel.cs" />
     <Compile Include="Models\PostModels\CreatePostBindingModel.cs" />
     <Compile Include="Models\UserModels\FriendRequestViewModel.cs" />
+    <Compile Include="Models\UserModels\GetWallBindingModel.cs" />
+    <Compile Include="Models\UserModels\LoginUserBindingModel.cs" />
     <Compile Include="Models\UserModels\NewsFeedBindingModel.cs" />
     <Compile Include="Models\UserModels\MinifiedUserViewModel.cs" />
     <Compile Include="Models\UserModels\UserViewModel.cs" />
     <Compile Include="Models\UserModels\SearchUserViewModel.cs" />
     <Compile Include="Models\UserModels\OwnerViewModel.cs" />
+    <Compile Include="Models\UserModels\UserViewModelMinified.cs" />
+    <Compile Include="Models\UserModels\UserViewModelPreview.cs" />
+    <Compile Include="Models\UserModels\WallPostsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />

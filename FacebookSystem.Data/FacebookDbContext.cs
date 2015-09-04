@@ -68,19 +68,6 @@
                 .HasRequired<ApplicationUser>(r => r.To)
                 .WithMany(u => u.FriendRequests)
                 .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<Comment>()
-            //    .HasRequired<ApplicationUser>(c => c.CommentOwner)
-            //    .WithMany(u => u.Comments)
-            //    .WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<Comment>()
-            //    .HasRequired(c => c.PostOwner)
-            //    .WithOptional()
-            //    .WillCascadeOnDelete(false);
-
         }
-
-        public System.Data.Entity.DbSet<FacebookSystem.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

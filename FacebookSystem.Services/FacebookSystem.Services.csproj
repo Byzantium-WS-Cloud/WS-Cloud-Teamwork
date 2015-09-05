@@ -222,10 +222,12 @@
     <Compile Include="Models\PostModels\AllPostsViewModel.cs" />
     <Compile Include="Models\PostModels\CreatePostBindingModel.cs" />
     <Compile Include="Models\UserModels\FriendRequestViewModel.cs" />
+    <Compile Include="Models\UserModels\EditProfileBindingModel.cs" />
     <Compile Include="Models\UserModels\GetWallBindingModel.cs" />
     <Compile Include="Models\UserModels\LoginUserBindingModel.cs" />
     <Compile Include="Models\UserModels\NewsFeedBindingModel.cs" />
     <Compile Include="Models\UserModels\MinifiedUserViewModel.cs" />
+    <Compile Include="Models\UserModels\ProfileViewModel.cs" />
     <Compile Include="Models\UserModels\UserViewModel.cs" />
     <Compile Include="Models\UserModels\SearchUserViewModel.cs" />
     <Compile Include="Models\UserModels\OwnerViewModel.cs" />

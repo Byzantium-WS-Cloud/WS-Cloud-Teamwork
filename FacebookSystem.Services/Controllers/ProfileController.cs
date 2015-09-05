@@ -7,11 +7,79 @@
     using Models.PostModels;
     using FacebookSystem.Models.Enums;
     using FacebookSystem.Models;
+    using System.Threading.Tasks;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Data;
 
     [Authorize]
     [RoutePrefix("api/profile")]
     public class ProfileController : BaseApiController
     {
+        [HttpGet]
+        [Route]
+        public IHttpActionResult GetProfile()
+        {
+            var userId = this.User.Identity.GetUserId();
+            if (userId == null)
+            {
+                return this.BadRequest("Invalid session token.");
+            }
+            
+            var user = this.Data.ApplicationUsers.All().FirstOrDefault(u => u.Id == userId);
+            var result = ProfileViewModel.Create(user);
+
+            return this.Ok(result);
+        }
+
+        [HttpPut]
+        [Route]
+        public IHttpActionResult EditProfileInfo(EditProfileBindingModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest(this.ModelState);
+            }
+            
+            var currentUserId = this.User.Identity.GetUserId();
+            var currentUser = this.Data.ApplicationUsers.All().FirstOrDefault(u => u.Id == currentUserId);
+
+            if (currentUser == null)
+            {
+                return this.BadRequest("Invalid user token.");
+            }
+
+            var userEmail = this.Data.ApplicationUsers.All().FirstOrDefault(u => u.Email == model.Email);
+            if (userEmail != null && userEmail.Id != currentUserId)
+            {
+                return this.BadRequest("Email is already taken.");
+            }
+
+            currentUser.Name = model.Name;
+            currentUser.Email = model.Email;
+            currentUser.Gender = model.Gender;
+
+            if (model.ProfileImageData != null && model.ProfileImageData.IndexOf(',') == -1)
+            {
+                model.ProfileImageData = string.Format("{0}{1}", "data:image/jpg;base64,", model.ProfileImageData);
+            }
+
+            currentUser.ProfileImageData = model.ProfileImageData;
+
+            if (model.CoverImageData != null && model.CoverImageData.IndexOf(',') == -1)
+            {
+                model.CoverImageData = string.Format("{0}{1}", "data:image/jpg;base64,", model.CoverImageData);
+            }
+
+            currentUser.CoverImageData = model.CoverImageData;
+
+            this.Data.SaveChanges();
+
+            return this.Ok(new
+            {
+                message = "User profile updated successfully."
+            });
+        }
+
         [HttpGet]
         [Route("feed")]
         public IHttpActionResult GetNewsFeed([FromUri]NewsFeedBindingModel newsFeedModel)

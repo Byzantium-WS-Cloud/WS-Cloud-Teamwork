@@ -13,7 +13,7 @@ socialNetwork.controller('userAuthenticationController', function ($scope, $loca
         authorizationService.login(loginData)
             .then(function (data) {
                 authorizationService.setUserCredentials(data);
-                $location.path('/users/dominik/wall');      // users/feeds
+                $location.path('users/feeds');      // users/feeds
                 notifyService.showInfo('Login successfully');
             }, function (error) {
                 notifyService.showError('Login failed ', error);

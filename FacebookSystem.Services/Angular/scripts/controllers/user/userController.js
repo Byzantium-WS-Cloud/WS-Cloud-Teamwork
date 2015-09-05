@@ -147,12 +147,12 @@ socialNetwork.controller('userController', function ($scope, $location, $http, $
     $scope.getFriendRequests = function () {
         if ($scope.hasPendingFriendRequest) {
             userService.getFriendRequests()
-                .then(function (data) {
+                .then(function(data) {
                     $scope.pendingFriendRequestData = data;
                     $scope.isPendingRequestHovered = true;
-                }, function (error) {
+                }, function(error) {
                     notifyService.showError('Connection to database error. Please try again. ');
-                })
+                });
         }
     };
 
@@ -208,11 +208,11 @@ socialNetwork.controller('userController', function ($scope, $location, $http, $
 
     $scope.searchByUsersFullName = function (substringOfFullname) {
         authorizationService.searchUsersByName(substringOfFullname)
-            .then(function (userNamesData) {
+            .then(function(userNamesData) {
                 $scope.userNames = userNamesData;
-            }, function (error) {
+            }, function(error) {
                 notifyService.showError('Connection to database error. Please try again. ');
-            })
+            });
     };
 
     $scope.addCommentToPost = function (feed, commentContent) {
@@ -228,11 +228,11 @@ socialNetwork.controller('userController', function ($scope, $location, $http, $
     
     $scope.getCommentsByPostId = function (postId) {
         commentService.getPostComments(postId)
-            .then(function (allCommentsForPostData) {
+            .then(function(allCommentsForPostData) {
                 $scope.allCommentsForPost = allCommentsForPostData;
-            }, function (error) {
+            }, function(error) {
                 notifyService.showError('Connection to database error. Please try again. ');
-            })
+            });
     };
 
     $scope.likeComment = function (post, comment) {

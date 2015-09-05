@@ -1,6 +1,6 @@
-<div ng-include="'templates/non-public/navbar-view.html'"></div>
+<div ng-include="'Angular/templates/non-public/navbar-view.html'"></div>
 
-<div ng-init="pageHeader='News Feeds'" ng-include="'templates/non-public/page-header-view.html'"></div>
+<div ng-init="pageHeader='News Feeds'" ng-include="'Angular/templates/non-public/page-header-view.html'"></div>
 
 <div class="row items">
     <div class="col-md-8">
@@ -12,7 +12,7 @@
                         <img alt="img" actual-src="{{feed.author.profileImageData}}" ng-src="./img/testP.jpg"/>
                     </a>
                     <span ng-mouseenter="previewUser(feed)" ng-click="goToUserWall(feed.author.username)" class="modal-title username">{{feed.author.name}}</span>
-                    <div ng-mouseleave="stopUserPreview()" ng-if="isUserHovered && hoveredPostId == feed.id" ng-include="'templates/non-public/user-preview-view.html'"></div>
+                    <div ng-mouseleave="stopUserPreview()" ng-if="isUserHovered && hoveredPostId == feed.id" ng-include="'Angular/templates/non-public/user-preview-view.html'"></div>
                     <div>
                         <span class="modal-posted-date"><strong>Posted at </strong>{{feed.date | date: "dd MMM yyyy 'at' HH:mm:ss"}}</span>
                     </div>
@@ -58,7 +58,7 @@
                         <span class="panel-title"><strong ng-click="goToUserWall(comment.author.username)"  ng-mouseenter="previewUser(comment)" class="username">{{comment.author.name}}</strong>
                             posted at {{comment.date | date: "dd/MM/yy HH:mm:ss"}}
                         </span>
-                        <div ng-mouseleave="stopUserPreview()" ng-if="isUserHovered && hoveredPostId == comment.id" ng-include="'templates/non-public/user-preview-view.html'"></div>
+                        <div ng-mouseleave="stopUserPreview()" ng-if="isUserHovered && hoveredPostId == comment.id" ng-include="'Angular/templates/non-public/user-preview-view.html'"></div>
                     </div>
                     <div class="panel-body container-postContent">
                         {{comment.commentContent}}
@@ -82,6 +82,6 @@
         <a href="" ng-if="feedPageSize > 2" ng-click="showLess()" class="btn btn-danger pull-right">Show less feeds <i class="fa fa-level-up"></i></a>
     </div>
     <div class="col-md-4">
-        <div ng-include="'templates/non-public/friends-panel-view.html'"></div>
+        <div ng-include="'Angular/templates/non-public/friends-panel-view.html'"></div>
     </div>
 </div>

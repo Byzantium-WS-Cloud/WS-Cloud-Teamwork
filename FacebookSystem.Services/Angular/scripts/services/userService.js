@@ -3,6 +3,7 @@
 socialNetwork.factory('userService', function (BASE_URL, PAGE_SIZE, mainRequesterService) {
     var serviceUrl = BASE_URL + '/me';
     var serviceRequester = {};
+    var serviceProfileUrl = BASE_URL + '/me';
 
     serviceRequester.editProfile = function (newData) {
         var profileData = {

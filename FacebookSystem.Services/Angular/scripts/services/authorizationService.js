@@ -2,6 +2,7 @@
 
 socialNetwork.factory('authorizationService', function (BASE_URL, PAGE_SIZE, mainRequesterService) {
     var serviceUrl = BASE_URL + '/users';
+    var accountServiceUrl = BASE_URL + '/account';
     var serviceRequester = {};
 
     serviceRequester.login = function (loginData) {
@@ -17,11 +18,11 @@ socialNetwork.factory('authorizationService', function (BASE_URL, PAGE_SIZE, mai
             "email": rawRegisterData.email,
             "gender": rawRegisterData.gender
         };
-        return mainRequesterService.postRequest(serviceUrl + '/register', registerData);
+        return mainRequesterService.postRequest(accountServiceUrl + '/register', registerData);
     };
 
     serviceRequester.logout = function () {
-        return mainRequesterService.postRequest(serviceUrl + '/logout', {});
+        return mainRequesterService.postRequest(accountServiceUrl + '/logout', {});
     };
 
     serviceRequester.getUserPreviewData = function () {

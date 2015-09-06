@@ -21,6 +21,7 @@
     using FacebookSystem.Services.Models;
     using FacebookSystem.Services.Providers;
     using FacebookSystem.Services.Results;
+    using System.Text;
 
     [Authorize]
     [RoutePrefix("api/Account")]

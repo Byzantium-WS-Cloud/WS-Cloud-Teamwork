@@ -1,9 +1,9 @@
 'use strict';
 
 socialNetwork.factory('userService', function (BASE_URL, PAGE_SIZE, mainRequesterService) {
-    var serviceUrl = BASE_URL + '/me';
+    var serviceUrl = BASE_URL + '/profile';
     var serviceRequester = {};
-    var serviceProfileUrl = BASE_URL + '/me';
+    var serviceProfileUrl = BASE_URL + '/profile';
 
     serviceRequester.editProfile = function (newData) {
         var profileData = {

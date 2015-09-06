@@ -81,6 +81,24 @@
         }
 
         [HttpGet]
+        [Route("friends")]
+        public IHttpActionResult GetFriends()
+        {
+            var userId = this.User.Identity.GetUserId();
+            if (userId == null)
+            {
+                return this.BadRequest();
+            }
+
+            var user = this.Data.ApplicationUsers.All().FirstOrDefault(u => u.Id == userId);
+            var friends = user.Friends
+                .OrderBy(fr => fr.Name)
+                .Select(UserViewModelMinified.Create);
+
+            return this.Ok(friends);
+        }
+
+        [HttpGet]
         [Route("feed")]
         public IHttpActionResult GetNewsFeed([FromUri]NewsFeedBindingModel newsFeedModel)
         {

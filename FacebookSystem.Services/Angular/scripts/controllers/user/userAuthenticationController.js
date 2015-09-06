@@ -23,8 +23,7 @@ socialNetwork.controller('userAuthenticationController', function ($scope, $loca
     $scope.registerUser = function (registerData) {
         authorizationService.register(registerData)
             .then(function (data) {
-                authorizationService.setUserCredentials(data);
-                $location.path('/users/feeds');
+                $location.path('/login');
             }, function (error) {
                 notifyService.showError('Register failed. Username/email already taken.', error);
             });

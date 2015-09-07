@@ -12,9 +12,9 @@
     {
         public int Id { get; set; }
 
-        public UserViewModelPreview Author { get; set; }
+        public UserViewModelMinified Author { get; set; }
 
-        public UserViewModelPreview WallOwner { get; set; }
+        public OwnerViewModel WallOwner { get; set; }
 
         public string PostContent { get; set; }
 
@@ -33,8 +33,8 @@
             return new WallPostsViewModel()
             {
                 Id = p.Id,
-                Author = UserViewModelPreview.Create(p.Owner, currentUser),
-                WallOwner = UserViewModelPreview.Create(p.Owner, currentUser),
+                Author = UserViewModelMinified.Create(p.Owner),
+                WallOwner = new OwnerViewModel {Id = p.OwnerId, Username = p.Owner.UserName},
                 PostContent = p.Content,
                 Date = p.CreatedOn,
                 LikesCount = p.Likes.Count,

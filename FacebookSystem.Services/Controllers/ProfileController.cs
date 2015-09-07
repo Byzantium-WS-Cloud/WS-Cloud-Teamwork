@@ -1,5 +1,6 @@
 ﻿namespace FacebookSystem.Services.Controllers
 {
+    using System.Data.Entity;
     using System.Linq;
     using System.Web.Http;
     using Microsoft.AspNet.Identity;
@@ -118,22 +119,23 @@
                 return this.BadRequest(this.ModelState);
             }
 
-            var user = this.Data.ApplicationUsers.All().Where(u => u.Id == userId);
-            var targetFeedPosts = this.Data.Posts.All()
-                .Where(p => p.Owner.Friends.Any(fr => fr.Id == userId))
+            var user = this.Data.ApplicationUsers.All().FirstOrDefault(u => u.Id == userId);
+            
+            var targetFeedPosts = user.WallPosts
                 .OrderByDescending(p => p.CreatedOn)
-                .AsEnumerable();
+                .AsQueryable();
 
             if (newsFeedModel.StartPostId.HasValue)
             {
-                targetFeedPosts = targetFeedPosts
-                    .SkipWhile(p => p.Id != newsFeedModel.StartPostId)
-                    .Skip(1);
+                targetFeedPosts =
+                    targetFeedPosts.SkipWhile(p => p.Id != newsFeedModel.StartPostId)
+                    .Skip(1).AsQueryable();
             }
 
             var pagePosts = targetFeedPosts
                 .Take(newsFeedModel.PageSize)
-                .Select(p => AllPostsViewModel.Create);
+                .Select(p => WallPostsViewModel.Create (p, user));
+
 
             return this.Ok(pagePosts);
         }

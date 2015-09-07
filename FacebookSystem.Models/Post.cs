@@ -26,6 +26,11 @@
         [Required]
         public string OwnerId { get; set; }
 
+        public string WallOwnerId { get; set; }
+
+
+        public ApplicationUser WallOwner { get; set; }
+
         public virtual ApplicationUser Owner { get; set; }
 
         public bool IsPostHidden { get; set; }

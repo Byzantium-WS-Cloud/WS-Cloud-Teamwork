@@ -8,6 +8,9 @@
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Http;
+
+    using FacebookSystem.Services.Models.PostModels;
+
     using Microsoft.AspNet.Identity;
     using Models;
 
@@ -145,8 +148,15 @@
             }
 
             var loggedUser = this.Data.ApplicationUsers.All().FirstOrDefault(u => u.Id == loggedUserId);
+            bool isFriend = loggedUser.Friends.Any(uf => uf.Id == wallOwner.Id);
 
-            var candidatePosts = wallOwner.Posts
+            if (!isFriend)
+            {
+                // cannot access non friend wall
+                return this.BadRequest("Cannot view non friend feeds.");
+            }
+
+            var candidatePosts = wallOwner.WallPosts
                 .OrderByDescending(p => p.CreatedOn)
                 .AsQueryable();
             var t = wallOwner.Posts.OrderByDescending(p => p.CreatedOn).ToList();
@@ -161,7 +171,7 @@
 
             var pagePosts = candidatePosts
                 .Take(wall.PageSize)
-                .Select(p => WallPostsViewModel.Create(p, loggedUser));
+                .Select(p => WallPostsViewModel.Create (p, loggedUser));
 
             return this.Ok(pagePosts);
         }

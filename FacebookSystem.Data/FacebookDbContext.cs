@@ -59,6 +59,11 @@
                 .WithMany(u => u.Posts)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Post>()
+                .HasRequired(p => p.WallOwner)
+                .WithMany(p => p.WallPosts)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<FriendRequest>()
                 .HasRequired<ApplicationUser>(r => r.From)
                 .WithMany()

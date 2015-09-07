@@ -62,12 +62,29 @@
                 return this.BadRequest(this.ModelState);
             }
 
+            var wallOwner = this.Data.ApplicationUsers.All().FirstOrDefault(a => a.UserName == model.WallOwnerUsername);
+
+            if (wallOwner == null)
+            {
+                return this.BadRequest("There is no user with Username " + model.WallOwnerUsername);
+            }
+
             var currentUserId = this.User.Identity.GetUserId();
-            var post = new Post { Content = model.Content, OwnerId = currentUserId, CreatedOn = DateTime.Now };
+            var currentUser = this.Data.ApplicationUsers.All().FirstOrDefault(u => u.Id == currentUserId);
+
+            bool isFriend = currentUser.Friends.Any(uf => uf.Id == wallOwner.Id);
+
+            if (!isFriend)
+            {
+                // cannot post on non friend wall
+                return this.Unauthorized();
+            }
+
+            var post = new Post { Content = model.Content, OwnerId = currentUserId, WallOwnerId = wallOwner.Id, CreatedOn = DateTime.Now };
 
             this.Data.Posts.Add(post);
             this.Data.SaveChanges();
-            return this.Ok(new { post.Id, post.Content });
+            return this.Ok(new { post.Id, post.Content, post.Owner.UserName });
         }
 
         // DELETE api/posts/{id}/Delete
@@ -83,12 +100,14 @@
             }
 
             var currentUserId = this.User.Identity.GetUserId();
-            if (post.OwnerId != currentUserId)
+
+            // You can delete only own posts and posts on your wall 
+            if (post.OwnerId != currentUserId && post.WallOwnerId != currentUserId)
             {
                 return this.BadRequest("You are not owner of this post. You cannot delete it!");
             }
 
-            if (post.IsPostHidden == true)
+            if (post.IsPostHidden)
             {
                 return this.BadRequest("Post does not exists");
             }
@@ -129,7 +148,7 @@
             return this.Ok("Successfully  liked post " + post.Id);
         }
 
-        // PUT api/{id}/dislike
+        // Delete api/{id}/dislike
         [HttpDelete]
         [Route("{id}/dislike")]
         public IHttpActionResult DislikePost(int id)

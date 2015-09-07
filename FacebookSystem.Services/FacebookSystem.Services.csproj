@@ -221,6 +221,7 @@
     <Compile Include="Models\LikeModels\LikeViewModel.cs" />
     <Compile Include="Models\PostModels\AllPostsViewModel.cs" />
     <Compile Include="Models\PostModels\CreatePostBindingModel.cs" />
+    <Compile Include="Models\PostModels\EditPostBindingModel.cs" />
     <Compile Include="Models\UserModels\FriendRequestViewModel.cs" />
     <Compile Include="Models\UserModels\EditProfileBindingModel.cs" />
     <Compile Include="Models\UserModels\GetWallBindingModel.cs" />

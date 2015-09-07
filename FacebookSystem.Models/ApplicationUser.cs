@@ -17,10 +17,12 @@
         private ICollection<ApplicationUser> friends;
         private ICollection<Notification> notifications;
         private ICollection<FriendRequest> friendRequests;
+        private ICollection<Post> wallPosts; 
 
         public ApplicationUser()
         {
             this.posts = new HashSet<Post>();
+            this.wallPosts = new HashSet<Post>();
             this.groups = new HashSet<Group>();
             this.comments = new HashSet<Comment>();
             this.friends = new HashSet<ApplicationUser>();
@@ -42,6 +44,18 @@
         {
             get { return this.posts; }
             set { this.posts = value; }
+        }
+
+        public virtual ICollection<Post> WallPosts
+        {
+            get
+            {
+                return this.wallPosts;
+            }
+            set
+            {
+                this.wallPosts = value;
+            }
         }
 
         public virtual ICollection<Group> Groups

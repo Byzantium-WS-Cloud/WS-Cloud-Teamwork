@@ -8,5 +8,8 @@
         [Required]
         [MinLength(2)]
         public string Content { get; set; }
+
+        [Required]
+        public string WallOwnerUsername { get; set; }
     }
 }

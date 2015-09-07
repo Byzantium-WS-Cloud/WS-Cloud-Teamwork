@@ -76,6 +76,13 @@
 
             var currentUserId = this.User.Identity.GetUserId();
             var loggedUser = this.Data.ApplicationUsers.All().FirstOrDefault(u => u.Id == currentUserId);
+            bool isFriend = loggedUser.Friends.Any(f => f.Id == post.WallOwnerId || f.Id == post.OwnerId);
+
+            // You can comment only your friends posts or comment posts on your friends wall
+            if (!isFriend)
+            {
+                return this.BadRequest("You can comment only friend posts");
+            }
 
             var comment = new Comment()
                               {
@@ -91,8 +98,8 @@
 
             var postedComment =
                 this.Data.Comments.All()
-                .Where(c => c.Id == comment.Id).
-                Select(CommentViewModel.Create)
+                .Where(c => c.Id == comment.Id)
+                .Select(CommentViewModel.Create)
                 .FirstOrDefault();
 
             return this.Ok(postedComment);
@@ -123,7 +130,6 @@
 
             var currentUserId = this.User.Identity.GetUserId();
 
-            // or currentUserId != comment.PostWallOwnerId
             if (currentUserId != comment.CommentOwner.Id)
             {
                 return this.Unauthorized();
@@ -159,22 +165,20 @@
                 return this.BadRequest(String.Format("there is no comment with id {0}", id));
             }
 
+            var post = this.Data.Posts.All().FirstOrDefault(p => p.Id == comment.PostId);
             var currentUserId = this.User.Identity.GetUserId();
             var loggedUser = this.Data.ApplicationUsers.All().FirstOrDefault(u => u.Id == currentUserId);
 
-            if (comment.CommentOwner != loggedUser)
+            if (comment.CommentOwner != loggedUser || loggedUser.Id != post.WallOwnerId)
             {
-                return this.Unauthorized();
+                return this.BadRequest("You can delete only your comments and comments on your wall.");
             }
-            // check if the comment is on users wall
 
             comment.IsCommentHidden = true;
             this.Data.SaveChanges();
 
             return this.Ok();
         }
-
-        // Make likes controler
 
         //Post api/comments/{id}/likes
         [HttpPost]

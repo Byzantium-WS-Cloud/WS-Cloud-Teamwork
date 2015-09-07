@@ -87,41 +87,6 @@
             return this.Ok(new { post.Id, post.Content, post.Owner.UserName });
         }
 
-        //PUT api/posts/{id}/editPost
-        [HttpPut]
-        [Route ("{id}/EditPost")]
-        public IHttpActionResult EditPost(int id, EditPostBindingModel model)
-        {
-            if (model == null)
-            {
-                return this.BadRequest("editPostModel cannot be null");
-            }
-
-            if (!this.ModelState.IsValid)
-            {
-                return this.BadRequest(this.ModelState);
-            }
-
-            var post = this.Data.Posts.All().FirstOrDefault(p => p.Id == id);
-            if (post == null)
-            {
-                this.BadRequest("No post with id " + id);
-            }
-
-            var loggedUserId = this.User.Identity.GetUserId();
-            var postOwnerId = post.OwnerId;
-
-            if (postOwnerId != loggedUserId)
-            {
-                return this.BadRequest("You can edit only your own posts");
-            }
-
-            post.Content = model.Content;
-            this.Data.SaveChanges();
-
-            return this.Ok(post.Content);
-        }
-
         // DELETE api/posts/{id}/Delete
         [HttpDelete]
         [Route("{id}/Delete")]

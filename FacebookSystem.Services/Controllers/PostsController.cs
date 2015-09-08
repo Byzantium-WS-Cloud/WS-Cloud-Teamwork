@@ -74,7 +74,7 @@
 
             bool isFriend = currentUser.Friends.Any(uf => uf.Id == wallOwner.Id);
 
-            if (!isFriend)
+            if (!isFriend && currentUserId != wallOwner.Id)
             {
                 // cannot post on non friend wall
                 return this.Unauthorized();

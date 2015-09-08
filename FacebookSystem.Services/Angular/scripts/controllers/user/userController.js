@@ -20,10 +20,15 @@ socialNetwork.controller('userController', function ($scope, $location, $http, $
         profilePath : '/users/profile'
     };
 
+    // Tests
+    $scope.printmyusername = function (currentUsername) {
+        console.log(currentUsername);
+    };
+
     $scope.userDetails = function () {
         if (authorizationService.isLoggedIn()) {
-            if (sessionStorage['currentUsername'] && sessionStorage['currentUserprofilepic']) { // Optimize query to the database
-                $scope.currentUsername = sessionStorage['currentUsername'];
+            if (sessionStorage['username'] && sessionStorage['currentUserprofilepic']) { // Optimize query to the database
+                $scope.currentUsername = sessionStorage['username'];
                 $scope.currentUserprofilepic = sessionStorage['currentUserprofilepic'];
             }else {
                 authorizationService.getUserPreviewData()
@@ -33,7 +38,7 @@ socialNetwork.controller('userController', function ($scope, $location, $http, $
                             $scope.currentUserprofilepic = data.profileImageData;
                         }
                         $scope.hasPendingFriendRequest = data.hasPendingRequest;
-                        sessionStorage['currentUsername'] = data.username;
+                        sessionStorage['username'] = data.username;
                         if (data.profileImageData !== null) {
                             sessionStorage['currentUserprofilepic'] = data.profileImageData;
                         }
@@ -335,9 +340,9 @@ socialNetwork.controller('userController', function ($scope, $location, $http, $
             $scope.getFriendsFriendsPreview($routeParams.username);
         }
 
-        //$scope.getNewsFeed();
-        //$scope.userDetails();
-        //$scope.fillEditProfileData();
+        $scope.getNewsFeed();
+        $scope.userDetails();
+        $scope.fillEditProfileData();
         $scope.getUserWall($routeParams.username);
         $scope.getWallsPost($routeParams.username);
         //$interval(function () {
@@ -348,5 +353,4 @@ socialNetwork.controller('userController', function ($scope, $location, $http, $
 
         // Add page auto-refresh
     }
-
 });

@@ -4,6 +4,10 @@ using System.Linq;
 
 namespace FacebookSystem.Services.Models
 {
+    using System;
+    using System.Linq.Expressions;
+    using System.Runtime.Serialization;
+
     public class MinifiedUserViewModel
     {
         public string Id { get; set; }
@@ -15,17 +19,25 @@ namespace FacebookSystem.Services.Models
         public string ProfileImageData { get; set; }
 
         public Gender Gender { get; set; }
-        
-        public static MinifiedUserViewModel Create(ApplicationUser user)
+
+        public static Expression<Func<ApplicationUser, MinifiedUserViewModel>> Create
         {
-            return new MinifiedUserViewModel()
+            get
             {
-                Id = user.Id,
-                Username = user.UserName,
-                Name = user.Name,
-                ProfileImageData = user.ProfileImageData,
-                Gender = user.Gender
-            };
-        }
+                return
+                    user =>
+                    new MinifiedUserViewModel()
+                        {
+                            Id = user.Id,
+                            Username = user.UserName,
+                            Name = user.Name,
+                            ProfileImageData = user.ProfileImageData,
+                            Gender = user.Gender
+                        };
+            }
+        } 
+
+       
+        
     }
 }

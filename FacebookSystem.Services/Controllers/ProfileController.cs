@@ -25,11 +25,14 @@
             {
                 return this.BadRequest("Invalid session token.");
             }
-            
-            var user = this.Data.ApplicationUsers.All().FirstOrDefault(u => u.Id == userId);
-            var result = ProfileViewModel.Create(user);
 
-            return this.Ok(result);
+            var user =
+                this.Data.ApplicationUsers.All()
+                    .Where(u => u.Id == userId)
+                    .Select(ProfileViewModel.Create)
+                    .FirstOrDefault();
+
+            return this.Ok(user);
         }
 
         [HttpPut]
@@ -94,6 +97,7 @@
             var user = this.Data.ApplicationUsers.All().FirstOrDefault(u => u.Id == userId);
             var friends = user.Friends
                 .OrderBy(fr => fr.Name)
+                .AsQueryable()
                 .Select(UserViewModelMinified.Create);
 
             return this.Ok(friends);
@@ -152,9 +156,26 @@
             }
 
             var user = this.Data.ApplicationUsers.All().FirstOrDefault(u => u.Id == userId);
-            var friendRequests = user.FriendRequests
-                .Where(r => r.Status == FriendRequestStatus.Pending)
-                .Select(FriendRequestViewModel.Create);
+            var friendRequests =
+                user.FriendRequests.Where(r => r.Status == FriendRequestStatus.Pending)
+                    .Select(
+                        r =>
+                        new FriendRequestViewModel()
+                            {
+                                Id = r.Id,
+                                Status = r.Status,
+                                User =
+                                    new MinifiedUserViewModel()
+                                        {
+                                            Id = r.FromId,
+                                            Gender = r.From.Gender,
+                                            Name = r.From.Name,
+                                            ProfileImageData =
+                                                r.From
+                                                .ProfileImageDataMinified,
+                                            Username = r.From.UserName
+                                        }
+                            });
 
             return this.Ok(friendRequests);
         }

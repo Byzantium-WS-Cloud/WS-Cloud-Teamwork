@@ -29,22 +29,22 @@
 
         public void Add(T entity)
         {
-            ChangeState(entity, EntityState.Added);
+            this.ChangeState(entity, EntityState.Added);
         }
 
         public void Edit(T entity)
         {
-            ChangeState(entity, EntityState.Modified);
+            this.ChangeState(entity, EntityState.Modified);
         }
 
         public void Delete(T entity)
         {
-            ChangeState(entity, EntityState.Deleted);
+            this.ChangeState(entity, EntityState.Deleted);
         }
 
         public void Detach(T entity)
         {
-            ChangeState(entity, EntityState.Detached);
+            this.ChangeState(entity, EntityState.Detached);
         }
 
 

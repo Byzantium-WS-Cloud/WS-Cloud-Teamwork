@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace FacebookSystem.Services.Models
 {
+    using System;
+    using System.Linq.Expressions;
+
     public class ProfileViewModel
     {
         public string Id { get; set; }
@@ -18,17 +21,22 @@ namespace FacebookSystem.Services.Models
 
         public string CoverImageData { get; set; }
 
-        public static ProfileViewModel Create(ApplicationUser user)
+        public static Expression<Func<ApplicationUser, ProfileViewModel>> Create
         {
-            return new ProfileViewModel()
+            get
             {
-                Id = user.Id,
-                Username = user.UserName,
-                Name = user.Name,
-                ProfileImageData = user.ProfileImageData,
-                Gender = user.Gender,
-                CoverImageData = user.CoverImageData
-            };
+                return
+                    user =>
+                    new ProfileViewModel()
+                        {
+                            Id = user.Id,
+                            Username = user.UserName,
+                            Name = user.Name,
+                            ProfileImageData = user.ProfileImageData,
+                            Gender = user.Gender,
+                            CoverImageData = user.CoverImageData
+                        };
+            }
         }
     }
 }

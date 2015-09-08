@@ -11,15 +11,5 @@ namespace FacebookSystem.Services.Models
         public FriendRequestStatus Status { get; set; }
 
         public MinifiedUserViewModel User { get; set; }
-
-        public static FriendRequestViewModel Create(FriendRequest request)
-        {
-            return new FriendRequestViewModel()
-            {
-                Id = request.Id,
-                Status = request.Status,
-                User = MinifiedUserViewModel.Create(request.From)
-            };
-        }
     }
 }

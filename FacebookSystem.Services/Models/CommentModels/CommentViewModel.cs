@@ -81,15 +81,23 @@
         public static CommentViewModel CreateCommentAndUser(Comment c, ApplicationUser currentUser)
         {
             return new CommentViewModel()
-            {
-                Id = c.Id,
-                Author = UserViewModelMinified.Create(c.CommentOwner),
-                LikesCount = c.Likes.Count,
-                Content = c.Content,
-                CreatedOn = c.CreatedOn,
-                IsLiked = c.Likes
-                    .Any(l => l.UserId == currentUser.Id)
-            };
+                       {
+                           Id = c.Id,
+                           Author =
+                               new UserViewModelMinified()
+                                   {
+                                       Id = c.CommentOwner.Id,
+                                       Gender = c.CommentOwner.Gender,
+                                       Name = c.CommentOwner.Name,
+                                       ProfileImageData =
+                                           c.CommentOwner.ProfileImageData,
+                                       Username = c.CommentOwner.UserName
+                                   },
+                           LikesCount = c.Likes.Count,
+                           Content = c.Content,
+                           CreatedOn = c.CreatedOn,
+                           IsLiked = c.Likes.Any(l => l.UserId == currentUser.Id)
+                       };
         }
     }
 }

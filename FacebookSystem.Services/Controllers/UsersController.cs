@@ -53,11 +53,11 @@
             }
 
             searchTerm = searchTerm.ToLower();
-            var userMatches = this.Data.ApplicationUsers.All()
-                .Where(u => u.Name.ToLower().Contains(searchTerm))
-                .Take(5)
-                .AsEnumerable()
-                .Select(SearchUserViewModel.Create);
+            var userMatches =
+                this.Data.ApplicationUsers.All()
+                    .Where(u => u.Name.ToLower().Contains(searchTerm))
+                    .Select(SearchUserViewModel.Create)
+                    .Take(5);
 
             return this.Ok(userMatches);
         }
@@ -85,9 +85,10 @@
             }
 
             var friends = user.Friends
+                .AsQueryable()
+                .Select(MinifiedUserViewModel.Create)
                 .Reverse()
-                .Take(6)
-                .Select(MinifiedUserViewModel.Create);
+                .Take(6);
 
             return this.Ok(new
             {
@@ -119,6 +120,7 @@
 
             var friends = user.Friends
                 .OrderBy(fr => fr.Name)
+                .AsQueryable()
                 .Select(MinifiedUserViewModel.Create);
 
             return this.Ok(friends);

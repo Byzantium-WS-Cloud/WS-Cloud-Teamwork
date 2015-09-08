@@ -33,7 +33,14 @@
             return new WallPostsViewModel()
             {
                 Id = p.Id,
-                Author = UserViewModelMinified.Create(p.Owner),
+                Author = new UserViewModelMinified()
+                             {
+                                 Id = p.OwnerId,
+                                 Gender = p.Owner.Gender,
+                                 Name = p.Owner.Name,
+                                 ProfileImageData = p.Owner.ProfileImageData,
+                                 Username = p.Owner.UserName
+                             },
                 WallOwner = new OwnerViewModel {Id = p.OwnerId, Username = p.Owner.UserName},
                 PostContent = p.Content,
                 Date = p.CreatedOn,

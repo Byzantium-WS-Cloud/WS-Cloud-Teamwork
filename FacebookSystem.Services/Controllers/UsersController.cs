@@ -157,9 +157,9 @@
             }
 
             var candidatePosts = wallOwner.WallPosts
+                .Where(p => p.IsPostHidden == false)
                 .OrderByDescending(p => p.CreatedOn)
                 .AsQueryable();
-            var t = wallOwner.Posts.OrderByDescending(p => p.CreatedOn).ToList();
 
             if (wall.StartPostId.HasValue)
             {

@@ -12,7 +12,7 @@
     [Authorize]
     public class CommentsController : BaseApiController
     {
-        //Get api/posts/{id}/comments
+        // Get api/posts/{id}/comments
         [HttpGet]
         [Route("api/posts/{postId}/comments")]
         public IHttpActionResult GetPostComments(int postId)
@@ -20,7 +20,7 @@
             var post = this.Data.Posts.All().FirstOrDefault(p => p.Id == postId);
             if (post == null)
             {
-                return this.BadRequest(String.Format("there is no post with id {0}", postId));
+                return this.BadRequest(string.Format("there is no post with id {0}", postId));
             }
 
             if (post.IsPostHidden)
@@ -79,7 +79,7 @@
             bool isFriend = loggedUser.Friends.Any(f => f.Id == post.WallOwnerId || f.Id == post.OwnerId);
 
             // You can comment only your friends posts or comment posts on your friends wall
-            if (!isFriend)
+            if (!isFriend && currentUserId != post.WallOwnerId)
             {
                 return this.BadRequest("You can comment only friend posts");
             }

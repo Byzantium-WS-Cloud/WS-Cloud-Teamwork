@@ -7,7 +7,7 @@ socialNetwork.factory('commentService', function (BASE_URL, mainRequesterService
     serviceRequester.addCommentToPost = function (feed, commentContent) {
         var postId = feed.id;
         var comment = {
-            "commentContent": commentContent
+            "Content": commentContent
         };
 
         return mainRequesterService.postRequest(serviceUrl + postId + '/comments', comment);

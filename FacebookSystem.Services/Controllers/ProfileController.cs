@@ -122,6 +122,7 @@
             var user = this.Data.ApplicationUsers.All().FirstOrDefault(u => u.Id == userId);
             
             var targetFeedPosts = user.WallPosts
+                .Where(p => p.IsPostHidden == false)
                 .OrderByDescending(p => p.CreatedOn)
                 .AsQueryable();
 

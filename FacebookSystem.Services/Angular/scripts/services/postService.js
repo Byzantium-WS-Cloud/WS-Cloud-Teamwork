@@ -6,22 +6,22 @@ socialNetwork.factory('postService', function (BASE_URL, mainRequesterService) {
 
     serviceRequester.addPost = function (postRawData) {
         var post = {
-            "postContent":postRawData.postContent ,
-            "username":postRawData.username
+            "Content": postRawData.postContent,
+            "WallOwnerUsername" : postRawData.username
         };
-        return mainRequesterService.postRequest(serviceUrl, post);
+        return mainRequesterService.postRequest(serviceUrl + '/CreatePost', post);
     };
     
     serviceRequester.likePost = function (postId) {
-        return mainRequesterService.postRequest(serviceUrl + '/' + postId + '/likes');
+        return mainRequesterService.postRequest(serviceUrl + '/' + postId + '/like');
     };
 
     serviceRequester.dislikePost = function (postId) {
-        return mainRequesterService.deleteRequest(serviceUrl + '/' + postId + '/likes');
+        return mainRequesterService.deleteRequest(serviceUrl + '/' + postId + '/dislike');
     };
 
     serviceRequester.deletePostById = function (postId) {
-        return mainRequesterService.deleteRequest(serviceUrl + '/'+postId);
+        return mainRequesterService.deleteRequest(serviceUrl + '/' + postId + '/Delete');
     };
 
     serviceRequester.editPostById = function (post) {

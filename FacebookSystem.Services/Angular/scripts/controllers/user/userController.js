@@ -38,7 +38,7 @@ socialNetwork.controller('userController', function ($scope, $location, $http, $
                             $scope.currentUserprofilepic = data.profileImageData;
                         }
                         $scope.hasPendingFriendRequest = data.hasPendingRequest;
-                        sessionStorage['username'] = data.username;
+                        sessionStorage['username'] = data.Username;
                         if (data.profileImageData !== null) {
                             sessionStorage['currentUserprofilepic'] = data.profileImageData;
                         }
@@ -91,24 +91,24 @@ socialNetwork.controller('userController', function ($scope, $location, $http, $
 
     $scope.editUserProfile = function (profileData) {
         userService.editProfile(profileData)
-            .then(function (data) {
+            .then(function(data) {
                 $location.path(Paths.feedPath);
                 $route.reload();
                 authorizationService.clearUserTemporaryData();
                 notifyService.showInfo(data.message);
-            }, function (error) {
+            }, function(error) {
                 notifyService.showError('Edit profile failed ', error);
-            })
+            });
     };
     
     $scope.changePassword = function (userData) {
         userService.changeUserPassword(userData)
-            .then(function (data) {
+            .then(function(data) {
                 $location.path(Paths.feedPath);
                 notifyService.showInfo(data.message);
-            }, function (error) {
+            }, function(error) {
                 notifyService.showError('Change password failed ', error);
-            })
+            });
     };
 
     $scope.getUserWall = function (username) {

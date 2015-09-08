@@ -35,16 +35,9 @@
                 return this.NotFound();
             }
 
-            return
-                this.Ok(new
-                        {
-                            post.Id,
-                            post.Content,
-                            post.CreatedOn,
-                            Owner = post.Owner.UserName,
-                            Comments = post.Comments.Select(c => c.Content),
-                            Likes = post.Likes.Count()
-                        });
+            var result =
+                this.Data.Posts.All().Where(p => p.Id == post.Id).Select(AllPostsViewModel.Create).FirstOrDefault();
+            return this.Ok(result);
         }
 
         // POST api/posts/CreatePost

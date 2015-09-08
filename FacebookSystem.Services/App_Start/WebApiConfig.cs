@@ -1,7 +1,10 @@
 ﻿namespace FacebookSystem.Services
 {
+    using System.Net.Http.Headers;
     using System.Web.Http;
     using Microsoft.Owin.Security.OAuth;
+
+    using Newtonsoft.Json.Serialization;
 
     public static class WebApiConfig
     {
@@ -19,6 +22,10 @@
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional });
+
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
+                new CamelCasePropertyNamesContractResolver();
         }
     }
 }

@@ -21,13 +21,13 @@ socialNetwork.controller('postController', function ($scope, $http, $route, $rou
     $scope.deleteFeedPost = function (post) {
         if (confirm('Are you sure you want to delete this post?')) {
             postService.deletePostById(post.id)
-                .then(function (data) {
+                .then(function(data) {
                     var postIndex = $scope.newsFeeds.indexOf(post);
                     $scope.newsFeeds.splice(postIndex, 1);
                     notifyService.showInfo('Successfully deleted post!');
-                }, function (error) {
+                }, function(error) {
                     notifyService.showError('Delete post failed ', error);
-                })
+                });
         }
     };
     $scope.addWallPost = function (postData) {
@@ -43,31 +43,31 @@ socialNetwork.controller('postController', function ($scope, $http, $route, $rou
 
     $scope.likePost = function (post) {
         postService.likePost(post.id)
-            .then(function (data) {
+            .then(function(data) {
                 post.liked = data.liked;
                 post.likesCount = data.likesCount;
-                notifyService.showInfo('Successfully liked post!')
-            }, function (error) {
+                notifyService.showInfo('Successfully liked post!');
+            }, function(error) {
                 notifyService.showError('Like post failed ', error);
-            })
+            });
     };
 
     $scope.dislikePost = function (post) {
         postService.dislikePost(post.id)
-            .then(function (data) {
+            .then(function(data) {
                 post.liked = data.liked;
                 post.likesCount = data.likesCount;
-                notifyService.showInfo('Successfully disliked post!')
-            }, function (error) {
+                notifyService.showInfo('Successfully disliked post!');
+            }, function(error) {
                 notifyService.showError('Dislike post failed ', error);
-            })
+            });
     };
 
     $scope.editPost = function (post) {
         postService.editPostById(post)
             .then(function (data) {
                 $rootScope.isEditActivated = false;
-                notifyService.showInfo('Successfully disliked post!')
+                notifyService.showInfo('Successfully disliked post!');
             }, function (error) {
                 notifyService.showError('Dislike post failed ', error);
             });

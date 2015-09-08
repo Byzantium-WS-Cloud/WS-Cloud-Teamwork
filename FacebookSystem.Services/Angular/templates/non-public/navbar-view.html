@@ -28,7 +28,7 @@
                                             <i class="fa fa-users"></i>
                                         </a>
                                     </p>
-                                    <div ng-mouseleave="hideUserRequestContainer()" ng-if="hasPendingFriendRequest && isPendingRequestHovered" ng-include="'templates/non-public/user-pendingFriend-view.html'"></div>
+                                    <div ng-mouseleave="hideUserRequestContainer()" ng-if="hasPendingFriendRequest && isPendingRequestHovered" ng-include="'Angular/templates/non-public/user-pendingFriend-view.html'"></div>
                                 </li>
                                 <li>
                                     <p class="bs-component">
@@ -50,7 +50,7 @@
                             <form class="navbar-form navbar-left" name="searchUsersForm" role="search">
                                 <div class="form-group">
                                     <input type="text" name="usersSearchBox" ng-model="searchCriteria" ng-change="searchByUsersFullName(searchCriteria)" class="form-control navi-search"  placeholder="Search">
-                                    <div ng-if="searchCriteria.length" ng-include="'templates/non-public/user-search-view.html'"></div>
+                                    <div ng-if="searchCriteria.length" ng-include="'Angular/templates/non-public/user-search-view.html'"></div>
                                 </div>
                             </form>
                         </div>

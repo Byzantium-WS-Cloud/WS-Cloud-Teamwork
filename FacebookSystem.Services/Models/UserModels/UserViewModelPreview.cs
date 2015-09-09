@@ -29,7 +29,7 @@
                 Name = user.Name,
                 Username = user.UserName,
                 Gender = user.Gender,
-                ProfileImageData = user.ProfileImageDataMinified,
+                ProfileImageData = user.ProfileImageData,
                 IsFriend = user.Friends
                    .Any(fr => fr.Id == loggedUser.Id),
                 HasPendingRequest = user.FriendRequests

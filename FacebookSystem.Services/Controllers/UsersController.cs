@@ -226,7 +226,6 @@
             }
 
             var loggedUser = this.Data.ApplicationUsers.All().FirstOrDefault(u => u.Id == loggedUserId);
-
             return this.Ok(UserViewModelPreview.Create(targetUser, loggedUser));
         }
     }

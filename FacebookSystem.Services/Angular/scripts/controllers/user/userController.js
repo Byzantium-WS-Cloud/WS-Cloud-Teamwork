@@ -38,7 +38,7 @@ socialNetwork.controller('userController', function ($scope, $location, $http, $
                             $scope.currentUserprofilepic = data.profileImageData;
                         }
                         $scope.hasPendingFriendRequest = data.hasPendingRequest;
-                        sessionStorage['username'] = data.Username;
+                        sessionStorage['username'] = data.username;
                         if (data.profileImageData !== null) {
                             sessionStorage['currentUserprofilepic'] = data.profileImageData;
                         }

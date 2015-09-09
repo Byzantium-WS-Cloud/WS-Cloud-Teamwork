@@ -279,5 +279,31 @@ namespace FacebookSystem.Services.Controllers
 
             return this.Ok(existingGroup);
         }
+        
+        [HttpGet]
+        public IHttpActionResult Members(int groupId)
+        {
+            var group = this.Data.Groups.All().SingleOrDefault(g => g.Id == groupId);
+            if (group == null)
+            {
+                return this.BadRequest("Invalid group id");
+            }
+
+            var groupMembers = group.Members;
+            var groupMembersViewModel = new List<MemberViewModel>();
+
+            groupMembers.ForEach(m =>
+            {
+                var newMember = new MemberViewModel()
+                {
+                    Id = m.Id,
+                    UserName = m.UserName
+                };
+
+                groupMembersViewModel.Add(newMember);
+            });
+
+            return this.Ok(groupMembersViewModel);
+        }
     }
 }

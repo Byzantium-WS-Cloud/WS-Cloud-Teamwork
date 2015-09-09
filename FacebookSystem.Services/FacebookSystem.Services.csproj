@@ -217,6 +217,7 @@
     <Compile Include="Models\GroupModels\CreateGroupViewModel.cs" />
     <Compile Include="Models\GroupModels\GroupUserViewModel.cs" />
     <Compile Include="Models\GroupModels\GroupViewModel.cs" />
+    <Compile Include="Models\GroupModels\MemberViewModel.cs" />
     <Compile Include="Models\GroupModels\PostViewModel.cs" />
     <Compile Include="Models\LikeModels\LikeViewModel.cs" />
     <Compile Include="Models\PostModels\AllPostsViewModel.cs" />

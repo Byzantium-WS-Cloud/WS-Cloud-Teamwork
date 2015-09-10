@@ -1,0 +1,11 @@
+<div class="panel panel-info" ng-if="friendsFriends.length>0">
+    <div class="panel-heading">
+        <h3 class="panel-title">Friends {{friendsFriends.length}} total</h3>
+    </div>
+    <div ng-repeat="friend in friendsFriends" class="panel-body">
+        <a href="" class="thumbnail friends-thumbs">
+            <img src="" alt="img" ng-src="{{friend.profileImageData}}" class="friendsProfilePic"/>
+            <span class="friendsName">{{friend.name}}</span>
+        </a>
+    </div>
+</div>

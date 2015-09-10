@@ -1,0 +1,19 @@
+<div class="row">
+    <div class="col-md-11 friendsPanel">
+        <div class="panel panel-warning" ng-controller="feedsController" >
+            <div class="panel-heading">
+                <h3 class="panel-title">Friends {{ownFriendsCollection.length}} total <i class="fa fa-users"></i></h3>
+            </div>
+            <div class="row">
+                <div ng-repeat="friend in ownFriendsCollection | limitTo: 9">
+                    <div class="col-md-4 friends-panel-thumb">
+                        <a href="" ng-click="goToUserWall(friend.username)" class="thumbnail friends-thumbs">
+                            <img alt="img" actual-src="{{friend.profileImageData}}" ng-src="./img/testP.jpg" class="friendsProfilePic"/>
+                            <span class="friendsName username" id="friends-names">{{friend.name}}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

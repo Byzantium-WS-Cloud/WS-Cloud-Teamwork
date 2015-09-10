@@ -1,0 +1,118 @@
+<div ng-include="'Angular/templates/non-public/navbar-view.html'"></div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="timeline-container">
+            <img actual-src="{{userWallData.coverImageData}}" ng-src="Angular/img/timelineDefault.jpg" alt="timeline" id="wallUser-timeline" class="user-timeline-image" />
+            <img actual-src="{{userWallData.profileImageData}}" ng-src="Angular/img/testP.jpg" alt="profileImage" id="wallUser-picture" class="img-thumbnail user-profile-image"/>
+            <span class="user-wall-fullName username" id="wallUsername">{{userWallData.name}}</span>
+            <div class="pull-right" ng-if="userWallData.username != currentUsername">
+                <a href="" class="btn btn-success btn-lg disabled" ng-show="userWallData.isFriend === true">Friend</a>
+                <a href="" ng-click="sendFriendRequest(userWallData)" class="btn btn-danger btn-lg" ng-show="userWallData.isFriend === false">Add friend</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <div class="modal-dialog" ng-repeat="feed in wallFeeds">
+            <div class="modal-content" data-id="{{feed.id}}">
+                <div class="modal-header overflowFix">
+                    <button ng-if="feed.author.username === currentUsername || feed.wallOwner.username === currentUsername" ng-controller="postController" type="button" ng-click="deletePost(feed)" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                    <a href="" class="thumbnail pull-left">
+                        <img alt="img" actual-src="{{feed.author.profileImageData}}" ng-src="Angular/img/testP.jpg" />
+                    </a>
+                    <span ng-mouseenter="previewUser(feed)" ng-click="goToUserWall(feed.author.username)" class="modal-title username">{{feed.author.name}}</span>
+                    <div ng-mouseleave="stopUserPreview()" ng-if="isUserHovered && hoveredPostId == feed.id" ng-include="'Angular/templates/non-public/user-preview-view.html'"></div>
+                    <div>
+                        <span class="modal-posted-date"><strong>Posted at </strong>{{feed.date | date: "dd MMM yyyy 'at' HH:mm:ss"}}</span>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <span ng-if="feed.author.username === currentUsername" ng-click="showEditBox(feed.id)" class="badge pull-right badge-edit">Edit</span>
+                    <p class="container-postContent">{{feed.postContent}}</p>
+                    <div ng-if="isEditActivated && editPostId == feed.id">
+                        <input class="form-control input-lg form-edit-post" ng-model="feed.postContent" type="text" id="">
+                        <a href="" ng-controller="postController" ng-click="editPost(feed)" class="btn btn-sm btn-info btn-edit-post">Edit post</a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="pull-left">
+                        <div class="like-menu-container" ng-if="feed.wallOwner.isFriend || feed.wallOwner.username == currentUsername">
+                            <button ng-controller="postController" type="button" ng-if="feed.liked != true" ng-click="likePost(feed)" class="btn btn-sm btn-success btn-vote" data-dismiss="modal">Like
+                                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+                            </button>
+                            <button ng-controller="postController" type="button" ng-if="feed.liked == true" ng-click="dislikePost(feed)" class="btn btn-sm btn-danger btn-vote" data-dismiss="modal">Dislike
+                                <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                        <span class="badge badge-likes" id="postLikes{{feed.id}}">likes {{feed.likesCount}}</span>
+                    </div>
+                    <form ng-if="feed.wallOwner.isFriend || feed.wallOwner.username == currentUsername" name="commentForm">
+                    <div class="form-group comment-box">
+                        <label class="control-label pull-left" for="inputLarge">Post your comment</label>
+                        <input name="commentField" ng-minlength="2" ng-maxlength="255" required ng-model="commentRawContent" class="form-control input-lg" type="text" id="inputLarge">
+                        <span class="label label-danger error" ng-show="commentForm.commentField.$error.minlength">
+                                Min length is 2 letters!
+                        </span>
+                        <span class="label label-danger error" ng-show="commentForm.commentField.$error.maxlength">
+                                    Min length is 255 letters!
+                        </span>
+                    </div>
+                    <span class="badge">total comments {{feed.comments.length}}</span>
+                    <button ng-disabled="commentForm.$invalid" ng-click="addCommentToPost(feed, commentRawContent)" type="button" id="{{feed.id}}" class="btn btn-primary" >Comment
+                        <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+                    </button>
+                    </form>
+                </div>
+                <div class="panel panel-default post-comments-container" ng-repeat="comment in feed.comments">
+                    <button ng-controller="commentController" ng-if="comment.author.username === currentUsername || feed.wallOwner.username === currentUsername"
+                            type="button" ng-click="deleteComment(feed, comment)" class="close" id="btn-delete-comment" data-dismiss="modal" aria-hidden="true">x</button>
+                    <div class="panel-heading overflowFix">
+                        <img actual-src="{{comment.author.profileImageData}}" ng-src="Angular/img/testP.jpg" class="img-thumbnail comment-user-image" alt="image" />
+                        <span class="panel-title"><strong ng-click="goToUserWall(comment.author.username)" ng-mouseenter="previewUser(comment)" class="username">{{comment.author.name}}</strong>
+                            <span class="date">posted at {{comment.date | date: "dd/MM/yy HH:mm:ss"}}</span>
+                        </span>
+                        <div ng-mouseleave="stopUserPreview()" ng-if="isUserHovered && hoveredPostId == comment.id" ng-include="'Angular/templates/non-public/user-preview-view.html'"></div>
+                    </div>
+                    <div class="panel-body container-postContent">
+                        {{comment.commentContent}}
+                    </div>
+                    <div class="container-comment-votes">
+                        <div class="pull-right ">
+                            <span class="badge badge-likes">likes {{comment.likesCount}}</span>
+                            <div class="like-menu-container" ng-if="feed.wallOwner.isFriend || feed.wallOwner.username == currentUsername">
+                                <button type="button" ng-click="likeComment(feed, comment)" ng-hide="comment.liked" class="btn btn-xs btn-success btn-vote-comment" data-dismiss="modal">
+                                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" ng-click="dislikeComment(feed, comment)" ng-show="comment.liked" class="btn btn-xs btn-danger btn-vote-comment" data-dismiss="modal">
+                                    <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="" ng-if="feed.id != postId" ng-click="showAllComments(feed)" class="btn btn-primary display-all-comments">See all</a>
+            </div>
+        </div>
+        <a href="" ng-click="showMoreFeedsOnWall()" class="btn btn-info pull-right">Show more feeds <i class="fa fa-level-down"></i></a>
+        <a href="" ng-if="wallPageSize > 2" ng-click="showLessFeedsOnWall()" class="btn btn-danger pull-right">Show less feeds <i class="fa fa-level-up"></i></a>
+    </div>
+    <div class="col-md-4 postBoxContainer">
+        <form ng-if="wallFeeds[0].wallOwner.isFriend || wallFeeds[0].wallOwner.username == currentUsername || userOnMyWall == currentUsername" class="form-horizontal" name="feedForm">
+            <div>
+                <label for="feedCommentBox">Make post on {{wallFeeds[0].wallOwner.name}}'s wall</label>
+            </div>
+                <span class="label label-danger error" ng-show="feedForm.commentBox.$error.minlength">
+                        Min post length is 2 letters!
+                </span>
+                <span class="label label-danger error" ng-show="feedForm.commentBox.$error.maxlength">
+                                    Min length is 400 letters!
+                </span>
+            <textarea name="commentBox" ng-model="post.postContent" ng-minlength="2" ng-maxlength="400" required id="feedCommentBox" placeholder="Enter message"></textarea>
+
+            <button ng-controller="postController" ng-click="addWallPost(post)" ng-disabled="feedForm.$invalid" class="btn btn-success btn-post-feed">Post <i class="fa fa-comment"></i></button>
+        </form>
+        <div ng-include="'Angular/templates/non-public/friends-friendsPreview-view.html'"></div>
+        <div ng-controller="feedsController" ng-if="wallFeeds[0].wallOwner.username == currentUsername" ng-include="'Angular/templates/non-public/friends-panel-view.html'"></div>
+    </div>
+</div>

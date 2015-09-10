@@ -2774,6 +2774,7 @@
     <Content Include="Angular\lib\angular\docs\js\search-worker.min.js.map" />
     <Content Include="Angular\lib\angular\errors.json" />
     <Content Include="Angular\lib\angular\version.json" />
+    <None Include="Properties\PublishProfiles\byzantium-socialnetwork.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

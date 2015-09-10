@@ -1,0 +1,73 @@
+<div class="row" ng-controller="userController">
+    <div class="col-sm-12">
+        <nav class="navbar navbar-default navi">
+            <div class="row">
+                <div class="container-fluid">
+                    <div class="col-md-10">
+                        <div class="navbar-header overflowFix">
+                            <div class="profile-image-thumb">
+                                <a href="">
+                                    <img ng-click="printmyusername(currentUsername)" class="img-thumbnail navi-picture" actual-src="{{currentUserprofilepic}}" ng-src="Angular/img/testP.jpg" alt="img" />
+                                </a>
+                                <span ng-click="goToMyWall(currentUsername)" class="navi-username username">{{currentUsername}}</span>
+                            </div>
+                        </div>
+                        <div class="pull-left">
+                            <ul class="nav navbar-nav navbar-right bs-glyphicons-list">
+                                <li>
+                                    <p class="bs-component">
+                                        <a href="#/users/feeds" class="btn btn-success btn-sm nav-buttons">
+                                            <i class="fa fa-comments"></i>
+                                        </a>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="bs-component" >
+                                        <a href="#/users/friendslist"  ng-mouseenter="getFriendRequests()" id="friendsButton" class="btn btn-success btn-sm nav-buttons">
+                                            <span ng-if="hasPendingFriendRequest" class="badge">{{pendingFriendRequestData.length || '!'}}</span>
+                                            <i class="fa fa-users"></i>
+                                        </a>
+                                    </p>
+                                    <div ng-mouseleave="hideUserRequestContainer()" ng-if="hasPendingFriendRequest && isPendingRequestHovered" ng-include="'Angular/templates/non-public/user-pendingFriend-view.html'"></div>
+                                </li>
+                                <li>
+                                    <p class="bs-component">
+                                        <a href="#/users/profile" class="btn btn-success btn-sm nav-buttons">
+                                            <i class="fa fa-cogs"></i>
+                                        </a>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="bs-component">
+                                        <a href="#/users/changePassword" class="btn btn-success btn-sm nav-buttons">
+                                            <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+                                        </a>
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="collapse navbar-collapse pull-right" id="bs-example-navbar-collapse-1">
+                            <form class="navbar-form navbar-left" name="searchUsersForm" role="search">
+                                <div class="form-group">
+                                    <input type="text" name="usersSearchBox" ng-model="searchCriteria" ng-change="searchByUsersFullName(searchCriteria)" class="form-control navi-search"  placeholder="Search">
+                                    <div ng-if="searchCriteria.length" ng-include="'Angular/templates/non-public/user-search-view.html'"></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-2 pull-right" >
+                        <ul class="nav navbar-nav navbar-right bs-glyphicons-list">
+                            <li>
+                                <p class="bs-component" ng-controller="userAuthenticationController">
+                                    <button  class="btn btn-warning logoutBtn btn-default" ng-click="logoutUser()">
+                                        <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                                    </button>
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>

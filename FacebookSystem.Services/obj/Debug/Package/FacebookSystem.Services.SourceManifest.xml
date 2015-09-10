@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<sitemanifest>
-  <DbDacFx path="D:\SoftUni\WebServices And Cloud\TeamWork_Clone\WS-Cloud-Teamwork\FacebookSystem.Services\obj\Debug\AutoScripts\FacebookDbConnection_IncrementalSchemaOnly.dacpac" dacpacAction="Deploy" />
-  <IisApp path="D:\SoftUni\WebServices And Cloud\TeamWork_Clone\WS-Cloud-Teamwork\FacebookSystem.Services\obj\Debug\Package\PackageTmp" managedRuntimeVersion="v4.0" />
-  <setAcl path="D:\SoftUni\WebServices And Cloud\TeamWork_Clone\WS-Cloud-Teamwork\FacebookSystem.Services\obj\Debug\Package\PackageTmp" setAclResourceType="Directory" />
-  <setAcl path="D:\SoftUni\WebServices And Cloud\TeamWork_Clone\WS-Cloud-Teamwork\FacebookSystem.Services\obj\Debug\Package\PackageTmp" setAclUser="anonymousAuthenticationUser" setAclResourceType="Directory" />
-</sitemanifest>

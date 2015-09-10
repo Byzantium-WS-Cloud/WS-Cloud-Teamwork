@@ -4,10 +4,10 @@
             <div ng-repeat="pendingFriend in pendingFriendRequestData">
                 <div class="panel-body">
                     <div class="pull-left">
-                        <img actual-src="{{pendingFriend.user.profileImageData}}" ng-src="./img/testP.jpg" alt="friendImage" class="img-thumbnail img-small"/>
+                        <img actual-src="{{pendingFriend.user.profileImageData}}" ng-src="Angular/img/testP.jpg" alt="friendImage" class="img-thumbnail img-small"/>
                     </div>
                     <div class="pull-right">
-                        <span class="username"><strong ng-click="goToUserWall(pendingFriend.user.username)">{{pendingFriend.user.name}}</strong></span>
+                        <span class="username"><strong ng-click="goToUserWall(pendingFriend.user.username)">{{pendingFriend.user.username}}</strong></span>
                     </div>
                 </div>
                 <div class="row">

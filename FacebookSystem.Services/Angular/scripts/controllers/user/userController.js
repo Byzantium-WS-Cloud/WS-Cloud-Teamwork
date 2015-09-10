@@ -345,11 +345,11 @@ socialNetwork.controller('userController', function ($scope, $location, $http, $
         $scope.fillEditProfileData();
         $scope.getUserWall($routeParams.username);
         $scope.getWallsPost($routeParams.username);
-        //$interval(function () {
-        //    if (sessionStorage['access_token']) {
-        //        $scope.getUserPendingFriendRequests();
-        //    }
-        //}, 5000);
+        $interval(function () {
+            if (sessionStorage['access_token']) {
+                $scope.getUserPendingFriendRequests();
+            }
+        }, 5000);
 
         // Add page auto-refresh
     }

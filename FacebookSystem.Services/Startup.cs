@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Owin;
-using Owin;
+﻿using Microsoft.Owin;
 
 [assembly: OwinStartup(typeof(FacebookSystem.Services.Startup))]
 
 namespace FacebookSystem.Services
 {
-    using System.Web.Http;
-
-    using Newtonsoft.Json.Serialization;
+    using Microsoft.Owin.Cors;
+    using Owin;
 
     public partial class Startup
     {
         public void Configuration(IAppBuilder app)
         {
+            app.UseCors(CorsOptions.AllowAll);
+
             this.ConfigureAuth(app);
         }
     }

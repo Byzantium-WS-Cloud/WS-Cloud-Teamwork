@@ -3,7 +3,7 @@
 socialNetwork.factory('userService', function (BASE_URL, PAGE_SIZE, mainRequesterService) {
     var serviceUrl = BASE_URL + '/profile';
     var serviceRequester = {};
-    var serviceProfileUrl = BASE_URL + '/profile';
+    var serviceAccountUrl = BASE_URL + '/Account';
 
     serviceRequester.editProfile = function (newData) {
         var profileData = {
@@ -28,7 +28,7 @@ socialNetwork.factory('userService', function (BASE_URL, PAGE_SIZE, mainRequeste
             "confirmPassword": userData.confirmPassword
         };
 
-        return mainRequesterService.putRequest(serviceUrl + '/ChangePassword', newUserPassword);
+        return mainRequesterService.postRequest(serviceAccountUrl + '/ChangePassword', newUserPassword);
     };
     
     serviceRequester.getOwnFriends = function () {

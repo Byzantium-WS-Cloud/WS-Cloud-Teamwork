@@ -46,20 +46,24 @@
         [Route("search")]
         public IHttpActionResult SearchUserByName([FromUri] string searchTerm)
         {
-            var loggedUserId = this.User.Identity.GetUserId();
-            if (loggedUserId == null)
+            if (searchTerm != null)
             {
-                return this.BadRequest("Invalid session token.");
+                var loggedUserId = this.User.Identity.GetUserId();
+                if (loggedUserId == null)
+                {
+                    return this.BadRequest("Invalid session token.");
+                }
+
+                searchTerm = searchTerm.ToLower();
+                var userMatches =
+                    this.Data.ApplicationUsers.All()
+                        .Where(u => u.Name.ToLower().Contains(searchTerm) || u.UserName.Contains(searchTerm))
+                        .Select(SearchUserViewModel.Create)
+                        .Take(5);
+
+                return this.Ok(userMatches);
             }
-
-            searchTerm = searchTerm.ToLower();
-            var userMatches =
-                this.Data.ApplicationUsers.All()
-                    .Where(u => u.Name.ToLower().Contains(searchTerm))
-                    .Select(SearchUserViewModel.Create)
-                    .Take(5);
-
-            return this.Ok(userMatches);
+            return this.Ok();
         }
 
         // GET api/users/{username}/friends/preview
@@ -150,13 +154,6 @@
             }
 
             var loggedUser = this.Data.ApplicationUsers.All().FirstOrDefault(u => u.Id == loggedUserId);
-            bool isFriend = loggedUser.Friends.Any(uf => uf.Id == wallOwner.Id);
-
-            if (!isFriend && loggedUser.Id != wallOwner.Id)
-            {
-                // cannot access non friend wall
-                return this.BadRequest("Cannot view non friend feeds.");
-            }
 
             var candidatePosts = wallOwner.WallPosts
                 .Where(p => p.IsPostHidden == false)
@@ -226,7 +223,6 @@
             }
 
             var loggedUser = this.Data.ApplicationUsers.All().FirstOrDefault(u => u.Id == loggedUserId);
-
             return this.Ok(UserViewModelPreview.Create(targetUser, loggedUser));
         }
     }

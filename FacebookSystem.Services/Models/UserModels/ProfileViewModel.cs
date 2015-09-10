@@ -15,6 +15,8 @@ namespace FacebookSystem.Services.Models
 
         public string Name { get; set; }
 
+        public string Email { get; set; }
+
         public string ProfileImageData { get; set; }
 
         public Gender Gender { get; set; }
@@ -32,6 +34,7 @@ namespace FacebookSystem.Services.Models
                             Id = user.Id,
                             Username = user.UserName,
                             Name = user.Name,
+                            Email = user.Email,
                             ProfileImageData = user.ProfileImageData,
                             Gender = user.Gender,
                             CoverImageData = user.CoverImageData

@@ -10,7 +10,7 @@
     <div class="col-md-8 panel panel-success friendlist-box" >
        <div class="row">
            <div class="col-md-6 panel-body" ng-repeat="friend in ownFriendsCollection | filter: nameFilter">
-               <img actual-src="{{friend.profileImageData}}" ng-src="./img/testP.jpg" alt="image" class="img-thumbnail container-friends-images"/>
+               <img actual-src="{{friend.profileImageData}}" ng-src="Angular/img/testP.jpg" alt="image" class="img-thumbnail container-friends-images"/>
                <span ng-mouseenter="previewFriend(friend)" id="friends-names" class="friendlist-names username">{{friend.name}}</span>
                <div ng-mouseleave="stopFriendPreview()" ng-if="isFriendHovered && hoveredPostId == friend.id" ng-include="'Angular/templates/non-public/user-preview-view.html'"></div>
            </div>

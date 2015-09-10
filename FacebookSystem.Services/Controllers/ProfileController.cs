@@ -172,7 +172,7 @@
                                             Name = r.From.Name,
                                             ProfileImageData =
                                                 r.From
-                                                .ProfileImageDataMinified,
+                                                .ProfileImageData,
                                             Username = r.From.UserName
                                         }
                             });
@@ -230,7 +230,7 @@
 
             return this.Ok(new
             {
-                message = string.Format("Friend request successfully sent to {0}.", recipient.Name)
+                message = string.Format("Friend request successfully sent to {0}.", recipient.UserName)
             });
         }
 

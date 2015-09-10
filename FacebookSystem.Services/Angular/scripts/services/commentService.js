@@ -18,12 +18,12 @@ socialNetwork.factory('commentService', function (BASE_URL, mainRequesterService
     };
 
     serviceRequester.likeComment = function (postId, commentId) {
-        var url = serviceUrl + postId + '/comments/' + commentId + '/likes';
+        var url = BASE_URL + '/comments/' + commentId + '/likes';
         return mainRequesterService.postRequest(url, {});
     };
 
     serviceRequester.dislikeComment = function (postId, commentId) {
-        var url = serviceUrl + postId + '/comments/' + commentId + '/likes';
+        var url = BASE_URL + '/comments/' + commentId + '/likes';
         return mainRequesterService.deleteRequest(url, {});
     };
 
